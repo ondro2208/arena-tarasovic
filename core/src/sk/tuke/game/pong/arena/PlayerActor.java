@@ -27,7 +27,6 @@ public class PlayerActor extends BodyTemplate {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		//super.draw(batch, parentAlpha);
 		batch.draw(image,0,0);
 	}
 
