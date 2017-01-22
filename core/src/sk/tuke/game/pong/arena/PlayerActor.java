@@ -14,8 +14,8 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class PlayerActor extends BodyTemplate {
 
-	Texture image;
-	Sprite sprite;
+	private Texture image;
+	private Sprite sprite;
 
 	public PlayerActor() {
 		image = new Texture(Gdx.files.internal("TU.jpg"));
@@ -33,7 +33,7 @@ public class PlayerActor extends BodyTemplate {
 
 	@Override
 	public Body createBody(World world) {
-
+		return null;
 	}
 
 	@Override
