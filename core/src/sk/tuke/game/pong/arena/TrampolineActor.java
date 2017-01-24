@@ -16,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class TrampolineActor extends BodyTemplate {
 
+	private final int x;
+	private final int y;
 	private Texture image;
 	private Sprite sprite;
 	public static final int TRAMPOLINE_WIDTH = 200;
@@ -24,12 +26,16 @@ public class TrampolineActor extends BodyTemplate {
 	private Vector2 trampolineBodyVector;
 	private BodyEditorLoader loader;
 
-	public TrampolineActor() {
+	public TrampolineActor(int x, int y) {
 		image = new Texture(Gdx.files.internal("trampoline.png"));
 		sprite = new Sprite(image);
 
-		sprite.setPosition(Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2,
-				Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4));
+		this.x = x;
+		this.y = y;
+		sprite.setPosition(x-sprite.getWidth()/2,y);
+		setPosition(x,y);
+		//sprite.setPosition(Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2,
+		//		Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4));
 	}
 
 	@Override
@@ -55,14 +61,14 @@ public class TrampolineActor extends BodyTemplate {
 		loader.attachFixture(trampolineBody, "trampolineBodyJson", fd, TRAMPOLINE_WIDTH);
 		trampolineBodyVector = loader.getOrigin("trampolineBodyJson", TRAMPOLINE_WIDTH).cpy();
 
+		trampolineBody.createFixture(fd).setUserData(this);
 		return trampolineBody;
 	}
 
 	@Override
 	protected BodyDef getBodyDef() {
 		BodyDef bd = new BodyDef();
-		bd.position.set(Gdx.graphics.getWidth() / 2,
-				Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4));
+		bd.position.set(getX(),getY());
 		bd.type = BodyDef.BodyType.StaticBody;
 		return bd;
 	}
@@ -72,7 +78,7 @@ public class TrampolineActor extends BodyTemplate {
 		FixtureDef fd = new FixtureDef();
 		fd.density = 100f;
 		fd.friction = 0.001f;
-		fd.restitution = 1.06f;
+		//fd.restitution = 1.06f;
 		return fd;
 	}
 
