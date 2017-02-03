@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class PointActor extends BodyTemplate {
 
 	public static final int POINT_SIZE = 20;
+	//public static final short BIT_POINT = 4;
 	private int x;
 	private int y;
 	private float radius;
@@ -57,20 +58,14 @@ public class PointActor extends BodyTemplate {
 			physicsFixture.setUserData(this);
 		}
 
+		pointBody.setActive(false);
 		return pointBody;
-
-//		loader = new BodyEditorLoader(Gdx.files.internal("trampoline.json"));
-//		loader.attachFixture(pointBody, "trampolineBodyJson", fd, TRAMPOLINE_WIDTH);
-//		pointBodyVector = loader.getOrigin("trampolineBodyJson", TRAMPOLINE_WIDTH).cpy();
-//
-//		pointBody.createFixture(fd).setUserData(this);
-//		return pointBody;
 	}
 
 	@Override
 	protected BodyDef getBodyDef(){
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.StaticBody;
+		bodyDef.type = BodyDef.BodyType.KinematicBody;
 		bodyDef.position.set(x,y);
 		return bodyDef;
 	}
@@ -84,8 +79,11 @@ public class PointActor extends BodyTemplate {
 		fixtureDef.shape = shape;
 		//Ball nepotrebuje restitution lebo to je nastavene na Paddle
 		//fixtureDef.restitution = 1.03f; //zvysenie rychlosti po kazdom odraze
-		//fixtureDef.friction = 0.001f; //trenie aby sa lopticka otacala a menil sa aj uhol odrazu
-		//fixtureDef.density = 1f;
+		fixtureDef.friction = 0.001f; //trenie aby sa lopticka otacala a menil sa aj uhol odrazu
+		fixtureDef.density = 1f;
+		//fixtureDef.filter.categoryBits = BIT_POINT;
+		//fixtureDef.filter.maskBits = BIT_POINT;
+		//fixtureDef.filter.groupIndex = 0;
 		return fixtureDef;
 	}
 

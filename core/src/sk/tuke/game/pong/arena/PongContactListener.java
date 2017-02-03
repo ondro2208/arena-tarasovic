@@ -1,27 +1,27 @@
 package sk.tuke.game.pong.arena;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * Created by DeeL on 09.09.2016.
  */
 public class PongContactListener implements ContactListener {
-    private final PlayerActor playerActor;
+    private PlayerActor playerActor;
+    private Stage stage;
 
-    public PongContactListener(PlayerActor playerActor) {
+    public PongContactListener(PlayerActor playerActor,Stage stage)
+    {
         this.playerActor = playerActor;
+        this.stage = stage;
     }
 
     @Override
     public void beginContact(Contact contact) {
-        if(contact.getFixtureB().getUserData() instanceof PointActor)
-            playerActor.grabPoint(((PointActor) contact.getFixtureB().getUserData()));
-        else if(contact.getFixtureA().getUserData() instanceof PointActor)
-                playerActor.grabPoint(((PointActor) contact.getFixtureA().getUserData()));
-            else
-                playerActor.contact();
+        playerActor.contact();
     }
 
     @Override

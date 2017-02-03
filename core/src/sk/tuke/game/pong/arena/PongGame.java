@@ -45,28 +45,16 @@ public class PongGame extends ApplicationAdapter {
 
 		gameStage = new Stage(new ScreenViewport());
 		player = new PlayerActor();
-		trampolines = new TrampolineActor[]{
-				new TrampolineActor(Gdx.graphics.getWidth() / 4 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
-				new TrampolineActor(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
-				new TrampolineActor(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/4) , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
-				new TrampolineActor(Gdx.graphics.getWidth() / 4 ,Gdx.graphics.getHeight() / 4),
-				new TrampolineActor(Gdx.graphics.getWidth() / 2 ,Gdx.graphics.getHeight() / 4),
-				new TrampolineActor(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/4) ,Gdx.graphics.getHeight() / 4)
-		};
-		//trampolineActor = new TrampolineActor(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4));
 
-
-		gameStage.addActor(player);
-		for(int i=0;i<6;i++){
-			gameStage.addActor(trampolines[i]);
-			trampolines[i].createBody(world);
-		}
+		trampolineInitialize();
 		pointInitialize();
+		gameStage.addActor(player);
 		player.createBody(world);
 
-		world.setContactListener(new PongContactListener(player));
-
+		world.setContactListener(new PongContactListener(player,gameStage));
 	}
+
+
 
 	@Override
 	public void render () {
@@ -76,6 +64,15 @@ public class PongGame extends ApplicationAdapter {
 			Gdx.app.exit();
 		}
 		gameStage.act();
+		if(points.size()>0) {
+			for (PointActor point : points) {
+				if (point.getPointBody().getPosition().dst(player.getPlayerBody().getPosition()) < 20) {
+					player.grabPoint(point, gameStage);
+					points.remove(point);
+					break;
+				}
+			}
+		}
 
 		gameStage.getBatch().begin();
 		gameStage.getBatch().draw(backgroundImage,0,0,GAME_WIDTH,GAME_HEIGHT);
@@ -95,9 +92,24 @@ public class PongGame extends ApplicationAdapter {
 
 	private void pointInitialize(){
 		points = new ArrayList<PointActor>();
-		PointActor point = new PointActor(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight() / 4+POINT_OFFSET);
+		PointActor point = new PointActor(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)-3*POINT_OFFSET);
 		point.createBody(world);
 		gameStage.addActor(point);
 		points.add(0,point);
+	}
+
+	private void trampolineInitialize() {
+		trampolines = new TrampolineActor[]{
+				new TrampolineActor(Gdx.graphics.getWidth() / 4 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
+				new TrampolineActor(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
+				new TrampolineActor(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/4) , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
+				new TrampolineActor(Gdx.graphics.getWidth() / 4 ,Gdx.graphics.getHeight() / 4),
+				new TrampolineActor(Gdx.graphics.getWidth() / 2 ,Gdx.graphics.getHeight() / 4),
+				new TrampolineActor(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/4) ,Gdx.graphics.getHeight() / 4)
+		};
+		for(int i=0;i<6;i++){
+			gameStage.addActor(trampolines[i]);
+			trampolines[i].createBody(world);
+		}
 	}
 }

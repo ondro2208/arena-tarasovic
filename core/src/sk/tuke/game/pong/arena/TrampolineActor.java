@@ -11,6 +11,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
+import javax.print.attribute.standard.PrinterLocation;
+
 /**
  * Created by otara on 22.1.2017.
  */
@@ -22,6 +24,7 @@ public class TrampolineActor extends BodyTemplate {
 	private Sprite sprite;
 	public static final int TRAMPOLINE_WIDTH = 200;
 	public static final int TRAMPOLINE_HEIGHT = 38;
+	public static final short BIT_TRAMPOLINE = 8;
 	private Body trampolineBody;
 	private Vector2 trampolineBodyVector;
 	private BodyEditorLoader loader;
@@ -78,7 +81,10 @@ public class TrampolineActor extends BodyTemplate {
 		FixtureDef fd = new FixtureDef();
 		fd.density = 100f;
 		fd.friction = 0.001f;
-		//fd.restitution = 1.06f;
+		fd.restitution = 1.06f;
+		//fd.filter.categoryBits = BIT_TRAMPOLINE;
+		//fd.filter.maskBits = PlayerActor.BIT_PLAYER;
+		//fd.filter.groupIndex = 0;
 		return fd;
 	}
 

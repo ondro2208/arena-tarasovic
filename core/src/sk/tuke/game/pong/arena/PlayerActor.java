@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * Created by otara on 22.1.2017.
@@ -18,6 +20,7 @@ public class PlayerActor extends BodyTemplate {
 	private Texture image;
 	private Sprite sprite;
 	public static final int PLAYER_WIDTH = 80;
+	public static final short BIT_PLAYER = 2;
 	private int score;
 	private Body playerBody;
 	private Vector2 playerBodyVector;
@@ -86,18 +89,14 @@ public class PlayerActor extends BodyTemplate {
 
 	@Override
 	protected FixtureDef getFixtureDef() {
-		/*PolygonShape shape = new PolygonShape();
-		Vector2 vector1 = new Vector2(getX(),getY());
-		Vector2 vector2 = new Vector2(getX()+80,getY());
-		Vector2 vector3 = new Vector2(getX()+40,getY()+80);
-		Vector2 vectors[] = new Vector2[]{vector1,vector2,vector3};
-		shape.set(vectors);*/
-
 		FixtureDef fd = new FixtureDef();
 		//fd.shape = shape;
 		fd.density = 100f;
 		fd.friction = 0.001f;
 		fd.restitution = 1.0f;
+		//fd.filter.categoryBits = BIT_PLAYER;
+		//fd.filter.maskBits = TrampolineActor.BIT_TRAMPOLINE;
+		//fd.filter.groupIndex = 0;
 		return fd;
 	}
 
@@ -134,8 +133,12 @@ public class PlayerActor extends BodyTemplate {
 		playerBody.setAngularDamping(5);
 	}
 
-	public void grabPoint(PointActor point){
-		point.destroy();
+	public void grabPoint(PointActor point,Stage stage){
+		for(Actor actor : stage.getActors()){
+			if(actor.equals(point)){
+				stage.getActors().removeValue(point,true);
+			}
+		}
 		point.remove();
 		this.score++;
 	}
