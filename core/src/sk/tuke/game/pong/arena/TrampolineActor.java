@@ -38,19 +38,14 @@ public class TrampolineActor extends BodyTemplate {
 		this.y = y;
 		sprite.setPosition(x-sprite.getWidth()/2,y);
 		setPosition(x,y);
-		//sprite.setPosition(Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2,
-		//		Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4));
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		//batch.draw(image,0,0);
 		Vector2 vector = trampolineBody.getPosition().sub(trampolineBodyVector);
 		sprite.setPosition(vector.x,vector.y);
 		sprite.setOrigin(trampolineBodyVector.x, trampolineBodyVector.y);
 		sprite.setRotation(trampolineBody.getAngle() * MathUtils.radiansToDegrees);
-
-		//playerBody.setLinearVelocity(0f, 400f);
 		batch.draw(sprite, sprite.getX(),sprite.getY(),TRAMPOLINE_WIDTH,TRAMPOLINE_HEIGHT);
 	}
 

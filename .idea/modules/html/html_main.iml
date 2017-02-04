@@ -3,7 +3,7 @@
   <component name="FacetManager">
     <facet type="gwt" name="GWT">
       <configuration>
-        <setting name="gwtSdkUrl" value="file://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-dev/2.6.0" />
+        <setting name="gwtSdkUrl" value="file://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-dev/2.6.1" />
         <setting name="gwtSdkType" value="gradle" />
       </configuration>
     </facet>
@@ -16,7 +16,6 @@
           <root url="file://$MODULE_DIR$/../../../html/webapp" relative="/" />
           <root url="file://$MODULE_DIR$/../../../html/war" relative="/" />
         </webroots>
-        <sourceRoots />
       </configuration>
     </facet>
     <facet type="web" name="Web Gradle : html-1.0.war">
@@ -27,7 +26,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/../../../html/webapp" relative="/" />
         </webroots>
-        <sourceRoots />
       </configuration>
     </facet>
   </component>
