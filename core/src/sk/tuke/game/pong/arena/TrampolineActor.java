@@ -18,6 +18,7 @@ import javax.print.attribute.standard.PrinterLocation;
  */
 public class TrampolineActor extends BodyTemplate {
 
+	private Direction direction;
 	private final int x;
 	private final int y;
 	private Texture image;
