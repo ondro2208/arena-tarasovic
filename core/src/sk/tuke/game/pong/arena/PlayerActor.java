@@ -22,6 +22,7 @@ public class PlayerActor extends BodyTemplate {
 	public static final int PLAYER_WIDTH = 80;
 	public static final short BIT_PLAYER = 2;
 	private int score;
+	private Direction direction;
 	private Body playerBody;
 	private Vector2 playerBodyVector;
 	private BodyEditorLoader loader;
@@ -30,6 +31,7 @@ public class PlayerActor extends BodyTemplate {
 	private Texture image2 = new Texture(Gdx.files.internal("TD.png"));
 
 	public PlayerActor() {
+		direction = Direction.UP;
 		image = new Texture(Gdx.files.internal("TU.jpg"));
 		sprite = new Sprite(image);
 		sprite.setPosition(Gdx.graphics.getWidth() / 2,
@@ -41,26 +43,13 @@ public class PlayerActor extends BodyTemplate {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		//batch.draw(image,0,0);
-		/*Vector2 vector = playerBody.getPosition().sub(playerBodyVector);
-		sprite.setPosition(vector.x,vector.y);
-		sprite.setOrigin(playerBodyVector.x, playerBodyVector.y);
-		sprite.setRotation(playerBody.getAngle() * MathUtils.radiansToDegrees);*/
-
-		//setPosition(vector.x,vector.y);
 		Vector2 tmpVector = playerBody.getPosition().sub(playerBodyVector);
 		setPosition(tmpVector.x,tmpVector.y);
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(tmpVector.x,tmpVector.y);
 		sprite.rotate(playerBody.getAngularVelocity());
 		sprite.setSize(PLAYER_WIDTH,PLAYER_WIDTH); //nastavenie velkosti podla pozadovanej velkosti
-		//sprite.draw(batch);
-
-		//playerBody.setLinearVelocity(0f, 400f);
 		batch.draw(sprite, sprite.getX(),sprite.getY(),sprite.getOriginX(),sprite.getOriginX(),PLAYER_WIDTH,PLAYER_WIDTH,sprite.getScaleX(),sprite.getScaleY(),sprite.getRotation());
-//	public void draw (TextureRegion region, float x, float y, float originX, float originY, float width, float height,
-//					  float scaleX, float scaleY, float rotation);
-		//sprite.draw(batch);
 	}
 
 	@Override
@@ -94,9 +83,9 @@ public class PlayerActor extends BodyTemplate {
 		fd.density = 100f;
 		fd.friction = 0.001f;
 		fd.restitution = 1.0f;
-		//fd.filter.categoryBits = BIT_PLAYER;
-		//fd.filter.maskBits = TrampolineActor.BIT_TRAMPOLINE;
-		//fd.filter.groupIndex = 0;
+		fd.filter.categoryBits = BIT_PLAYER;
+		fd.filter.maskBits = TrampolineActor.BIT_TRAMPOLINE;
+		fd.filter.groupIndex = 0;
 		return fd;
 	}
 
@@ -104,14 +93,14 @@ public class PlayerActor extends BodyTemplate {
 	public void act(float delta) {
 		if (playerBody !=null) {
 			if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
-				updateVector(200);
+				updateVector(400,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()-(Gdx.graphics.getHeight()/4));
 		}
 	}
 
-	public void updateVector(float value){
+	public void updateVector(float value, int x, int y){
 		float mass = playerBody.getMass();
 		float targetVelocity = value;//200f; //For 60kmph simulated
-		Vector2 targetPosition = new Vector2(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()-(Gdx.graphics.getHeight()/4));
+		Vector2 targetPosition = new Vector2(x,y);
 		// Now calculate the impulse magnitude and use it to scale
 		// a direction (because its 2D movement)
 		float impulseMag = mass * targetVelocity;
@@ -131,6 +120,25 @@ public class PlayerActor extends BodyTemplate {
 	public void contact(){
 		playerBody.setAngularVelocity(15);
 		playerBody.setAngularDamping(5);
+	}
+
+	public void endContact(){
+		switch (direction){
+			case UP:{
+				setDirection(Direction.DOWN);
+				updateVector(400,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/4);
+				break;
+			}
+			case DOWN:{
+				setDirection(Direction.UP);
+				updateVector(400,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()-(Gdx.graphics.getHeight()/4));
+				break;
+			}
+			default:{
+				setDirection(Direction.UP);
+				updateVector(400,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()-(Gdx.graphics.getHeight()/4));
+			}
+		}
 	}
 
 	public void grabPoint(PointActor point,Stage stage){
@@ -157,5 +165,13 @@ public class PlayerActor extends BodyTemplate {
 
 	public BodyEditorLoader getLoader() {
 		return loader;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 }

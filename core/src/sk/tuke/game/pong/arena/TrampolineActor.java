@@ -82,9 +82,9 @@ public class TrampolineActor extends BodyTemplate {
 		fd.density = 100f;
 		fd.friction = 0.001f;
 		fd.restitution = 1.06f;
-		//fd.filter.categoryBits = BIT_TRAMPOLINE;
-		//fd.filter.maskBits = PlayerActor.BIT_PLAYER;
-		//fd.filter.groupIndex = 0;
+		fd.filter.categoryBits = BIT_TRAMPOLINE;
+		fd.filter.maskBits = PlayerActor.BIT_PLAYER;
+		fd.filter.groupIndex = 0;
 		return fd;
 	}
 

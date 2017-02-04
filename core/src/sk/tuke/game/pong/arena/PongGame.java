@@ -51,7 +51,7 @@ public class PongGame extends ApplicationAdapter {
 		gameStage.addActor(player);
 		player.createBody(world);
 
-		world.setContactListener(new PongContactListener(player,gameStage));
+		world.setContactListener(new PongContactListener(player));
 	}
 
 
@@ -77,11 +77,11 @@ public class PongGame extends ApplicationAdapter {
 		gameStage.getBatch().begin();
 		gameStage.getBatch().draw(backgroundImage,0,0,GAME_WIDTH,GAME_HEIGHT);
 		gameStage.getBatch().end();
-		if(player.getPlayerBody() !=null)
-		gameStage.draw();
+		if(player.getPlayerBody() != null)
+			gameStage.draw();
 
 		debugRenderer.render(world,camera.combined);
-		world.step(/*Gdx.graphics.getDeltaTime()*/1/60f,6,2);
+		world.step(Gdx.graphics.getDeltaTime()/*1/60f-*/,6,2);
 	}
 	
 	@Override

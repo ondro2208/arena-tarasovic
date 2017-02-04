@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 public class PointActor extends BodyTemplate {
 
 	public static final int POINT_SIZE = 20;
-	//public static final short BIT_POINT = 4;
+	public static final short BIT_POINT = 4;
 	private int x;
 	private int y;
 	private float radius;
@@ -81,9 +81,9 @@ public class PointActor extends BodyTemplate {
 		//fixtureDef.restitution = 1.03f; //zvysenie rychlosti po kazdom odraze
 		fixtureDef.friction = 0.001f; //trenie aby sa lopticka otacala a menil sa aj uhol odrazu
 		fixtureDef.density = 1f;
-		//fixtureDef.filter.categoryBits = BIT_POINT;
-		//fixtureDef.filter.maskBits = BIT_POINT;
-		//fixtureDef.filter.groupIndex = 0;
+		fixtureDef.filter.categoryBits = BIT_POINT;
+		fixtureDef.filter.maskBits = BIT_POINT;
+		fixtureDef.filter.groupIndex = 0;
 		return fixtureDef;
 	}
 
