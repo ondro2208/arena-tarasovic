@@ -23,7 +23,7 @@ public class PongContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        playerActor.endContact();
+       // playerActor.endContact();
     }
 
     @Override

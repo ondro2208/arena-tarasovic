@@ -48,6 +48,7 @@ public class PlayerActor extends BodyTemplate {
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(tmpVector.x,tmpVector.y);
 		sprite.rotate(playerBody.getAngularVelocity());
+		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setSize(PLAYER_WIDTH,PLAYER_WIDTH); //nastavenie velkosti podla pozadovanej velkosti
 		batch.draw(sprite, sprite.getX(),sprite.getY(),sprite.getOriginX(),sprite.getOriginX(),PLAYER_WIDTH,PLAYER_WIDTH,sprite.getScaleX(),sprite.getScaleY(),sprite.getRotation());
 	}
@@ -118,8 +119,11 @@ public class PlayerActor extends BodyTemplate {
 	}
 
 	public void contact(){
-		playerBody.setAngularVelocity(15);
+		playerBody.setAngularVelocity(15.01f);
 		playerBody.setAngularDamping(5);
+		System.out.println("KONTAKT");
+		//float desiredAngle = atan2f( -toTarget.x, toTarget.y );
+		//playerBody.setTransform(playerBody.getPosition(),180);
 	}
 
 	public void endContact(){
