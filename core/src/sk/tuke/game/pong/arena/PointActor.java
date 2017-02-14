@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import java.util.Random;
+
 /**
  * Created by otara on 22.1.2017.
  */
@@ -16,12 +18,22 @@ public class PointActor extends BodyTemplate {
 
 	public static final int POINT_SIZE = 20;
 	public static final short BIT_POINT = 4;
+	public static final int POINT_OFFSET = 35;
 	private int x;
 	private int y;
 	private float radius;
 	private Body pointBody;
 	private Sprite sprite;
 	private Texture image;
+
+	public static int[][] pointsPositions = new int[][]{
+			{Gdx.graphics.getWidth() / 4 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)-POINT_OFFSET},
+			{Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)-POINT_OFFSET},
+			{Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/4),Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)-POINT_OFFSET},
+			{Gdx.graphics.getWidth() / 4 , Gdx.graphics.getHeight() / 4 + POINT_OFFSET},
+			{Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 4 + POINT_OFFSET},
+			{Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/4),Gdx.graphics.getHeight() / 4 + POINT_OFFSET}
+	};
 
 	public PointActor(int x, int y) {
 		this.x = x;
@@ -113,5 +125,28 @@ public class PointActor extends BodyTemplate {
 	public void destroy(){
 		pointBody.destroyFixture(physicsFixture);
 		pointBody = null;
+	}
+
+	private PointActor generateNewPoint(Vector2 positionVector) {
+		int n, x, y;
+		n = generateRandomPosition();
+		x = pointsPositions[n][0];
+		y = pointsPositions[n][1];
+
+		while (positionVector.x == x && positionVector.y == y) {
+			n = generateRandomPosition();
+			x = pointsPositions[n][0];
+			y = pointsPositions[n][1];
+		}
+
+		PointActor point = new PointActor(x,y);
+		return point;
+	}
+
+	private int generateRandomPosition() {
+		Random rand = new Random();
+		int n = rand.nextInt(60) + 1;
+		n = Math.round(n / 10);
+		return n;
 	}
 }

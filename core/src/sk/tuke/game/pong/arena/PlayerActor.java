@@ -20,7 +20,8 @@ public class PlayerActor extends BodyTemplate {
 	private Sprite sprite;
 	public static final int PLAYER_WIDTH = 80;
 	public static final short BIT_PLAYER = 2;
-	private int score;
+
+
 	private Direction direction;
 	private Body playerBody;
 	private Vector2 playerBodyVector;
@@ -119,7 +120,7 @@ public class PlayerActor extends BodyTemplate {
 	}
 
 	public void contact() {
-		playerBody.setAngularVelocity(15.001f);
+		playerBody.setAngularVelocity(15.005f);
 		playerBody.setAngularDamping(5);
 		setDirectionAndTarget();
 		//playerBody.applyAngularImpulse(1,true);
@@ -151,7 +152,6 @@ public class PlayerActor extends BodyTemplate {
 			}
 		}
 		point.remove();
-		this.score++;
 	}
 
 	public Sprite getSprite() {

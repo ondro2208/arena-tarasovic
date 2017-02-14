@@ -6,10 +6,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.util.ArrayList;
@@ -19,7 +21,8 @@ public class PongGame extends ApplicationAdapter {
 	public static final int GAME_WIDTH = 1920;
 	public static final int GAME_HEIGHT = 1080;
 	public static final String GAME_NAME = "Pong";
-	private static final int POINT_OFFSET = 30;
+	public static final int POINT_OFFSET = 35;
+	private static final String SCORE_TEXT = "SCORE: ";
 
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera camera;
@@ -31,7 +34,8 @@ public class PongGame extends ApplicationAdapter {
 	private World world;
 
 	private Texture backgroundImage;
-
+	private Label scoreText;
+	private int score;
 
 	@Override
 	public void create () {
@@ -51,6 +55,9 @@ public class PongGame extends ApplicationAdapter {
 		gameStage.addActor(player);
 		player.createBody(world);
 
+		createScore();
+		gameStage.addActor(scoreText);
+
 		world.setContactListener(new PongContactListener(player));
 	}
 
@@ -69,6 +76,7 @@ public class PongGame extends ApplicationAdapter {
 				if (point.getPointBody().getPosition().dst(player.getPlayerBody().getPosition()) < 20) {
 					player.grabPoint(point, gameStage);
 					points.remove(point);
+					updateScore();
 					break;
 				}
 			}
@@ -80,7 +88,7 @@ public class PongGame extends ApplicationAdapter {
 		if(player.getPlayerBody() != null)
 			gameStage.draw();
 
-		//debugRenderer.render(world,camera.combined);
+		debugRenderer.render(world,camera.combined);
 		world.step(/*Gdx.graphics.getDeltaTime()*/1/60f,6,2);
 	}
 	
@@ -92,7 +100,7 @@ public class PongGame extends ApplicationAdapter {
 
 	private void pointInitialize(){
 		points = new ArrayList<PointActor>();
-		PointActor point = new PointActor(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)-3*POINT_OFFSET);
+		PointActor point = new PointActor(PointActor.pointsPositions[1][0] , PointActor.pointsPositions[1][1]);
 		point.createBody(world);
 		gameStage.addActor(point);
 		points.add(0,point);
@@ -112,4 +120,23 @@ public class PongGame extends ApplicationAdapter {
 			trampolines[i].createBody(world);
 		}
 	}
+
+	private Label createScore(){
+		Label.LabelStyle textStyle;
+		BitmapFont font = new BitmapFont();
+
+		textStyle = new Label.LabelStyle();
+		textStyle.font = font;
+
+		scoreText = new Label(SCORE_TEXT + score,textStyle);
+		scoreText.setBounds(Gdx.graphics.getWidth()-100,Gdx.graphics.getHeight()-80,90,70);
+		scoreText.setFontScale(1f,1f);
+		return scoreText;
+	}
+
+	private void updateScore(){
+		this.score++;
+		scoreText.setText(SCORE_TEXT+score);
+	}
+
 }
