@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -43,11 +42,12 @@ public class PlayerActor extends BodyTemplate {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
+
+
 		Vector2 tmpVector = playerBody.getPosition().sub(playerBodyVector);
 		setPosition(tmpVector.x,tmpVector.y);
-		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setPosition(tmpVector.x,tmpVector.y);
-		sprite.rotate(playerBody.getAngularVelocity());
+		sprite.setRotation(playerBody.getAngle() * MathUtils.radiansToDegrees);
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		sprite.setSize(PLAYER_WIDTH,PLAYER_WIDTH); //nastavenie velkosti podla pozadovanej velkosti
 		batch.draw(sprite, sprite.getX(),sprite.getY(),sprite.getOriginX(),sprite.getOriginX(),PLAYER_WIDTH,PLAYER_WIDTH,sprite.getScaleX(),sprite.getScaleY(),sprite.getRotation());
@@ -118,15 +118,14 @@ public class PlayerActor extends BodyTemplate {
 		playerBody.applyLinearImpulse(impulse,playerBody.getWorldCenter(), true);
 	}
 
-	public void contact(){
-		playerBody.setAngularVelocity(15.01f);
+	public void contact() {
+		playerBody.setAngularVelocity(15.001f);
 		playerBody.setAngularDamping(5);
-		System.out.println("KONTAKT");
-		//float desiredAngle = atan2f( -toTarget.x, toTarget.y );
-		//playerBody.setTransform(playerBody.getPosition(),180);
+		setDirectionAndTarget();
+		//playerBody.applyAngularImpulse(1,true);
 	}
 
-	public void endContact(){
+	public void setDirectionAndTarget(){
 		switch (direction){
 			case UP:{
 				setDirection(Direction.DOWN);

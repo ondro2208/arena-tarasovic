@@ -80,8 +80,8 @@ public class PongGame extends ApplicationAdapter {
 		if(player.getPlayerBody() != null)
 			gameStage.draw();
 
-		debugRenderer.render(world,camera.combined);
-		world.step(Gdx.graphics.getDeltaTime()/*1/60f-*/,6,2);
+		//debugRenderer.render(world,camera.combined);
+		world.step(/*Gdx.graphics.getDeltaTime()*/1/60f,6,2);
 	}
 	
 	@Override

@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  */
 public class PongContactListener implements ContactListener {
     private PlayerActor playerActor;
+    private int counter;
 
     public PongContactListener(PlayerActor playerActor)
     {
@@ -18,12 +19,13 @@ public class PongContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        playerActor.contact();
+        if(contact.getFixtureA().getUserData() instanceof TrampolineActor)
+            playerActor.contact();
     }
 
     @Override
     public void endContact(Contact contact) {
-       // playerActor.endContact();
+
     }
 
     @Override
