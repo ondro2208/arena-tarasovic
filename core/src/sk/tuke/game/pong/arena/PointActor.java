@@ -127,7 +127,7 @@ public class PointActor extends BodyTemplate {
 		pointBody = null;
 	}
 
-	private PointActor generateNewPoint(Vector2 positionVector) {
+	public PointActor generateNewPoint(Vector2 positionVector) {
 		int n, x, y;
 		n = generateRandomPosition();
 		x = pointsPositions[n][0];
@@ -147,6 +147,12 @@ public class PointActor extends BodyTemplate {
 		Random rand = new Random();
 		int n = rand.nextInt(60) + 1;
 		n = Math.round(n / 10);
-		return n;
+		return n-1;
+		/*int n = rand.nextInt(2);
+		if(n==0){
+			return 2-1;
+		}
+		else
+			return 5-1;*/
 	}
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -35,7 +36,7 @@ public class PongGame extends ApplicationAdapter {
 
 	private Texture backgroundImage;
 	private Label scoreText;
-	private int score;
+	private int score = 0;
 
 	@Override
 	public void create () {
@@ -72,11 +73,19 @@ public class PongGame extends ApplicationAdapter {
 		}
 		gameStage.act();
 		if(points.size()>0) {
-			for (PointActor point : points) {
-				if (point.getPointBody().getPosition().dst(player.getPlayerBody().getPosition()) < 20) {
-					player.grabPoint(point, gameStage);
-					points.remove(point);
+			for(Actor actor : gameStage.getActors()){
+				if(actor instanceof PointActor &&
+						((PointActor)actor).getPointBody().getPosition().dst(player.getPlayerBody().getPosition()) < 20){
+					Vector2 pointPosition = ((PointActor)actor).getPointBody().getPosition();
+					//player.grabPoint((PointActor)actor, gameStage);
+					//TODO functionality of grab point
+					points.remove(((PointActor)actor));
+					actor.remove();
 					updateScore();
+					PointActor newPoint = ((PointActor)actor).generateNewPoint(pointPosition);
+					newPoint.createBody(world);
+					gameStage.addActor(newPoint);
+					points.add(0,newPoint);
 					break;
 				}
 			}
@@ -97,6 +106,7 @@ public class PongGame extends ApplicationAdapter {
 		backgroundImage.dispose();
 		gameStage.dispose();
 	}
+
 
 	private void pointInitialize(){
 		points = new ArrayList<PointActor>();

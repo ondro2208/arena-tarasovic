@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="a6caa4a8-d5a0-4a32-b4e0-fbf651e2e131" name="Default" comment="" />
-    <list default="true" id="2c3978b7-b1d9-47b4-8530-63a3b0b1bcfc" name="sobota1440" comment="fixed difference between player and sprite angle&#10;right set of direction in contact">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PongGame.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PongGame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java" afterPath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java" />
+    <list default="true" id="2c3978b7-b1d9-47b4-8530-63a3b0b1bcfc" name="sobota1440" comment="work on generate point after grab">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PlayerActor$1.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PlayerActor$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PlayerActor.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PlayerActor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PointActor.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PointActor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PongContactListener.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PongContactListener.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PointActor.java" afterPath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PointActor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PongGame.java" afterPath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PongGame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pongGame.iws" afterPath="$PROJECT_DIR$/pongGame.iws" />
@@ -95,11 +97,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PongGame.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PongGame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PongGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="102" column="111" lean-forward="false" selection-start-line="102" selection-start-column="111" selection-end-line="102" selection-end-column="111" />
+            <state relative-caret-position="91">
+              <caret line="78" column="93" lean-forward="true" selection-start-line="78" selection-start-column="93" selection-end-line="78" selection-end-column="93" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -110,8 +112,8 @@
       <file leaf-file-name="PlayerActor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
+            <state relative-caret-position="209">
+              <caret line="147" column="16" lean-forward="false" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -131,11 +133,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PointActor.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PointActor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PointActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="129" column="34" lean-forward="true" selection-start-line="129" selection-start-column="34" selection-end-line="129" selection-end-column="34" />
+            <state relative-caret-position="368">
+              <caret line="147" column="8" lean-forward="false" selection-start-line="147" selection-start-column="8" selection-end-line="147" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -188,6 +190,8 @@
       <find>BIT_POINT</find>
       <find>UP</find>
       <find>Background</find>
+      <find>actor</find>
+      <find>score</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -1294,9 +1298,9 @@
         <option value="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/TrampolineActor.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PongContactListener.java" />
-        <option value="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PointActor.java" />
         <option value="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java" />
         <option value="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PongGame.java" />
+        <option value="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PointActor.java" />
       </list>
     </option>
   </component>
@@ -1942,7 +1946,7 @@
       <workItem from="1486983974092" duration="2356000" />
       <workItem from="1486986903462" duration="1493000" />
       <workItem from="1487082529422" duration="196000" />
-      <workItem from="1487082749137" duration="10326000" />
+      <workItem from="1487082749137" duration="14318000" />
     </task>
     <task id="LOCAL-00001" summary="something">
       <created>1485110535419</created>
@@ -2014,11 +2018,18 @@
       <option name="project" value="LOCAL" />
       <updated>1487086397847</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="work on generate point after grab">
+      <created>1487093149330</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1487093149330</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74003000" />
+    <option name="totallyTimeSpent" value="77995000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -2127,12 +2138,13 @@
     <MESSAGE value="sobota1459" />
     <MESSAGE value="pondelok13/02/2017/1285" />
     <MESSAGE value="fixed difference between player and sprite angle&#10;right set of direction in contact" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed difference between player and sprite angle&#10;right set of direction in contact" />
+    <MESSAGE value="work on generate point after grab" />
+    <option name="LAST_COMMIT_MESSAGE" value="work on generate point after grab" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="72" />
+      <option name="time" value="77" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2248,14 +2260,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/EnemyActor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/BodyEditorLoader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2669">
@@ -2290,6 +2294,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.4/f0e4d245a67fc96707610a4260a325fa034c93d1/gdx-1.9.4-sources.jar!/com/badlogic/gdx/scenes/scene2d/ui/Table.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="1236" column="32" lean-forward="false" selection-start-line="1236" selection-start-column="32" selection-end-line="1236" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PongContactListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -2300,10 +2312,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.4/bcc145f992ce5ab249ddf7c277c576488753af8f/gdx-backend-lwjgl-1.9.4-sources.jar!/com/badlogic/gdx/backends/lwjgl/LwjglApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="223" column="0" lean-forward="false" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/EnemyActor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PongGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="78" column="93" lean-forward="true" selection-start-line="78" selection-start-column="93" selection-end-line="78" selection-end-column="93" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
+        <state relative-caret-position="209">
+          <caret line="147" column="16" lean-forward="false" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2312,19 +2350,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PointActor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="129" column="34" lean-forward="true" selection-start-line="129" selection-start-column="34" selection-end-line="129" selection-end-column="34" />
+        <state relative-caret-position="368">
+          <caret line="147" column="8" lean-forward="false" selection-start-line="147" selection-start-column="8" selection-end-line="147" selection-end-column="8" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PongGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="102" column="111" lean-forward="false" selection-start-line="102" selection-start-column="111" selection-end-line="102" selection-end-column="111" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
