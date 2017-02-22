@@ -75,9 +75,9 @@ public class TrampolineActor extends BodyTemplate {
 	@Override
 	protected FixtureDef getFixtureDef() {
 		FixtureDef fd = new FixtureDef();
-		fd.density = 100f;
-		fd.friction = 0.001f;
-		fd.restitution = 1.06f;
+		//fd.density = 100f;
+		//fd.friction = 0.000f;
+		//fd.restitution = 1.0f;
 		fd.filter.categoryBits = BIT_TRAMPOLINE;
 		fd.filter.maskBits = PlayerActor.BIT_PLAYER;
 		fd.filter.groupIndex = 0;

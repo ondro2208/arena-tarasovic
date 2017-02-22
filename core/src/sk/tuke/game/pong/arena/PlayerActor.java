@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * Created by otara on 22.1.2017.
@@ -27,8 +25,9 @@ public class PlayerActor extends BodyTemplate {
 	private Vector2 playerBodyVector;
 	private BodyEditorLoader loader;
 	private World world;
-	protected Fixture fixture;
-	private Texture image2 = new Texture(Gdx.files.internal("TD.png"));
+	//protected Fixture fixture;
+	//private Texture image2 = new Texture(Gdx.files.internal("TD.png"));
+	private boolean RotatedRight = false;
 
 	public PlayerActor() {
 		direction = Direction.UP;
@@ -82,9 +81,9 @@ public class PlayerActor extends BodyTemplate {
 	protected FixtureDef getFixtureDef() {
 		FixtureDef fd = new FixtureDef();
 		//fd.shape = shape;
-		fd.density = 100f;
-		fd.friction = 0.001f;
-		fd.restitution = 1.0f;
+		//fd.density = 100f;
+		//fd.friction = 0.00f;
+		//fd.restitution = 1.0f;
 		fd.filter.categoryBits = BIT_PLAYER;
 		fd.filter.maskBits = TrampolineActor.BIT_TRAMPOLINE;
 		fd.filter.groupIndex = 0;
@@ -97,6 +96,7 @@ public class PlayerActor extends BodyTemplate {
 			if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
 				updateVector(400,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()-(Gdx.graphics.getHeight()/4));
 		}
+
 	}
 
 	public void updateVector(float value, int x, int y){
@@ -120,10 +120,22 @@ public class PlayerActor extends BodyTemplate {
 	}
 
 	public void contact() {
-		playerBody.setAngularVelocity(15.005f);
-		playerBody.setAngularDamping(5);
+		System.out.println("Body angle: " + Math.toDegrees(playerBody.getAngle())+"\nAngular velocity: "+playerBody.getAngularVelocity());
+		playerBody.setAngularVelocity(0);
+		playerBody.setAngularDamping(0);
+		if(RotatedRight){
+		//	playerBody.setAngularVelocity(-20f);
+			playerBody.setAngularVelocity(-100f);
+			RotatedRight = false;
+		}
+		else {
+		//	playerBody.setAngularVelocity(20f);
+			playerBody.setAngularVelocity(50f);
+			RotatedRight = true;
+		}
+		//playerBody.setAngularDamping(6.8387782573699951171874999999999999999999999999999999999999999999999999999999999999f);
+		playerBody.setAngularDamping(19.24103080563978f);
 		setDirectionAndTarget();
-		//playerBody.applyAngularImpulse(1,true);
 	}
 
 	public void setDirectionAndTarget(){
@@ -143,15 +155,6 @@ public class PlayerActor extends BodyTemplate {
 				updateVector(400,Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()-(Gdx.graphics.getHeight()/4));
 			}
 		}
-	}
-
-	public void grabPoint(PointActor point,Stage stage){
-		for(Actor actor : stage.getActors()){
-			if(actor.equals(point)){
-				stage.getActors().removeValue(point,true);
-			}
-		}
-		point.remove();
 	}
 
 	public Sprite getSprite() {

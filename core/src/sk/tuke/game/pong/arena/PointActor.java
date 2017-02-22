@@ -91,8 +91,8 @@ public class PointActor extends BodyTemplate {
 		fixtureDef.shape = shape;
 		//Ball nepotrebuje restitution lebo to je nastavene na Paddle
 		//fixtureDef.restitution = 1.03f; //zvysenie rychlosti po kazdom odraze
-		fixtureDef.friction = 0.001f; //trenie aby sa lopticka otacala a menil sa aj uhol odrazu
-		fixtureDef.density = 1f;
+		//fixtureDef.friction = 0.001f; //trenie aby sa lopticka otacala a menil sa aj uhol odrazu
+		//fixtureDef.density = 1f;
 		fixtureDef.filter.categoryBits = BIT_POINT;
 		fixtureDef.filter.maskBits = BIT_POINT;
 		fixtureDef.filter.groupIndex = 0;
@@ -122,10 +122,6 @@ public class PointActor extends BodyTemplate {
 	public void setImage(Texture image) {
 		this.image = image;
 	}
-	public void destroy(){
-		pointBody.destroyFixture(physicsFixture);
-		pointBody = null;
-	}
 
 	public PointActor generateNewPoint(Vector2 positionVector) {
 		int n, x, y;
@@ -145,8 +141,10 @@ public class PointActor extends BodyTemplate {
 
 	private int generateRandomPosition() {
 		Random rand = new Random();
-		int n = rand.nextInt(60) + 1;
-		n = Math.round(n / 10);
+		int n = rand.nextInt(56) + 6;
+		System.out.println("before round: " + n);
+		n = Math.round(n / (float)10);
+		System.out.println("after round: " + n);
 		return n-1;
 		/*int n = rand.nextInt(2);
 		if(n==0){
