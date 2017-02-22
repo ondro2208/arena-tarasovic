@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 
 /**
  * Created by otara on 22.1.2017.
@@ -124,17 +127,17 @@ public class PlayerActor extends BodyTemplate {
 		playerBody.setAngularVelocity(0);
 		playerBody.setAngularDamping(0);
 		if(RotatedRight){
-		//	playerBody.setAngularVelocity(-20f);
-			playerBody.setAngularVelocity(-100f);
+			playerBody.setAngularVelocity(-20f);
+			//playerBody.setAngularVelocity(-50f);
 			RotatedRight = false;
 		}
 		else {
-		//	playerBody.setAngularVelocity(20f);
-			playerBody.setAngularVelocity(50f);
+			playerBody.setAngularVelocity(20f);
+			//playerBody.setAngularVelocity(50f);
 			RotatedRight = true;
 		}
-		//playerBody.setAngularDamping(6.8387782573699951171874999999999999999999999999999999999999999999999999999999999999f);
-		playerBody.setAngularDamping(19.24103080563978f);
+		playerBody.setAngularDamping(6.8387782573699951171875f);
+		//playerBody.setAngularDamping(19.24103080563978f);
 		setDirectionAndTarget();
 	}
 

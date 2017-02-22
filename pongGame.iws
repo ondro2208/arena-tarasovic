@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list id="a6caa4a8-d5a0-4a32-b4e0-fbf651e2e131" name="Default" comment="" />
-    <list default="true" id="2c3978b7-b1d9-47b4-8530-63a3b0b1bcfc" name="sobota1440" comment="reslove count score and generate point after grab">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PlayerActor$1.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PlayerActor$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PlayerActor.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PlayerActor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PointActor.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PointActor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PongGame.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/PongGame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/TrampolineActor.class" afterPath="$PROJECT_DIR$/core/build/classes/main/sk/tuke/game/pong/arena/TrampolineActor.class" />
+    <list default="true" id="2c3978b7-b1d9-47b4-8530-63a3b0b1bcfc" name="sobota1440" comment="random generated point position">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java" afterPath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PointActor.java" afterPath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PointActor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/TrampolineActor.java" afterPath="$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/TrampolineActor.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pongGame.iws" afterPath="$PROJECT_DIR$/pongGame.iws" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -111,11 +104,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PlayerActor.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PlayerActor.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="137" column="32" lean-forward="false" selection-start-line="137" selection-start-column="32" selection-end-line="137" selection-end-column="32" />
+            <state relative-caret-position="401">
+              <caret line="135" column="61" lean-forward="false" selection-start-line="135" selection-start-column="61" selection-end-line="135" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -123,11 +116,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrampolineActor.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrampolineActor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/TrampolineActor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="809">
-              <caret line="79" column="10" lean-forward="false" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="10" />
+            <state relative-caret-position="1115">
+              <caret line="77" column="8" lean-forward="true" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -2085,7 +2078,7 @@
       <workItem from="1487082749137" duration="14377000" />
       <workItem from="1487192980091" duration="2050000" />
       <workItem from="1487687681363" duration="11427000" />
-      <workItem from="1487779437517" duration="1271000" />
+      <workItem from="1487779437517" duration="1718000" />
     </task>
     <task id="LOCAL-00001" summary="something">
       <created>1485110535419</created>
@@ -2171,11 +2164,18 @@
       <option name="project" value="LOCAL" />
       <updated>1487107533709</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="random generated point position">
+      <created>1487781022493</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1487781022493</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92802000" />
+    <option name="totallyTimeSpent" value="93249000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -2194,12 +2194,13 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29319954" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32887402" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20735785" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20735785" sideWeight="0.4978678" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15831557" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -2211,7 +2212,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32887402" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998884" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2286,7 +2286,8 @@
     <MESSAGE value="fixed difference between player and sprite angle&#10;right set of direction in contact" />
     <MESSAGE value="work on generate point after grab" />
     <MESSAGE value="reslove count score and generate point after grab" />
-    <option name="LAST_COMMIT_MESSAGE" value="reslove count score and generate point after grab" />
+    <MESSAGE value="random generated point position" />
+    <option name="LAST_COMMIT_MESSAGE" value="random generated point position" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -2688,21 +2689,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java">
+    <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/TrampolineActor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="137" column="32" lean-forward="false" selection-start-line="137" selection-start-column="32" selection-end-line="137" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="1115">
+          <caret line="77" column="8" lean-forward="true" selection-start-line="77" selection-start-column="8" selection-end-line="77" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/TrampolineActor.java">
+    <entry file="file://$PROJECT_DIR$/core/src/sk/tuke/game/pong/arena/PlayerActor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="809">
-          <caret line="79" column="10" lean-forward="false" selection-start-line="79" selection-start-column="10" selection-end-line="79" selection-end-column="10" />
-          <folding />
+        <state relative-caret-position="401">
+          <caret line="135" column="61" lean-forward="false" selection-start-line="135" selection-start-column="61" selection-end-line="135" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
