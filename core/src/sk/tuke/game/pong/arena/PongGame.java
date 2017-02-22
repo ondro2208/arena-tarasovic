@@ -76,7 +76,7 @@ public class PongGame extends ApplicationAdapter {
 						((PointActor)actor).getPointBody().getPosition().dst(player.getPlayerBody().getPosition()) < 20){
 					Vector2 pointPosition = ((PointActor)actor).getPointBody().getPosition();
 					//TODO functionality of grab point
-					points.remove(((PointActor)actor));
+					points.remove(actor);
 					actor.remove();
 					updateScore();
 					PointActor newPoint = ((PointActor)actor).generateNewPoint(pointPosition);
@@ -87,7 +87,6 @@ public class PongGame extends ApplicationAdapter {
 				}
 			}
 		}
-
 		gameStage.getBatch().begin();
 		gameStage.getBatch().draw(backgroundImage,0,0,GAME_WIDTH,GAME_HEIGHT);
 		gameStage.getBatch().end();
@@ -95,7 +94,7 @@ public class PongGame extends ApplicationAdapter {
 			gameStage.draw();
 
 		debugRenderer.render(world,camera.combined);
-		world.step(/*Gdx.graphics.getDeltaTime()*/1/60f,6,2);
+		world.step(1 / 60f, 6, 2);/*Gdx.graphics.getDeltaTime()*/
 	}
 	
 	@Override

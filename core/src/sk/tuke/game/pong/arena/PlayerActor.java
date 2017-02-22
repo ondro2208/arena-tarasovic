@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.*;
  */
 public class PlayerActor extends BodyTemplate {
 
-	private Texture image;
 	private Sprite sprite;
 	public static final int RADIUS = 40;
 	public static final short BIT_PLAYER = 2;
@@ -25,7 +24,7 @@ public class PlayerActor extends BodyTemplate {
 
 	public PlayerActor() {
 		direction = Direction.UP;
-		image = new Texture(Gdx.files.internal("player.png"));
+		Texture image = new Texture(Gdx.files.internal("player.png"));
 		sprite = new Sprite(image);
 		sprite.setPosition(Gdx.graphics.getWidth() / 2,
 				Gdx.graphics.getHeight() / 2);
@@ -55,8 +54,7 @@ public class PlayerActor extends BodyTemplate {
 				throw new RuntimeException("Shape is not defined in FixtureDef");
 			}
 			physicsFixture = playerBody.createFixture(fd);
-			fd.shape.dispose(); //needs to be called when shape is no longer needed
-
+			fd.shape.dispose();
 			physicsFixture.setUserData(this);
 		}
 		return playerBody;

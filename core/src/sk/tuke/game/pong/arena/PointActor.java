@@ -47,7 +47,7 @@ public class PointActor extends BodyTemplate {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2); //nastav bod otacania na stred textury
-		sprite.setCenter(getX(),getY()); //nastav poziciu podla stredu, aby som nemusel riesit offset posunutia textury
+		sprite.setCenter(getX(), getY());
 		sprite.draw(batch);
 	}
 
@@ -86,9 +86,8 @@ public class PointActor extends BodyTemplate {
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		//Ball nepotrebuje restitution lebo to je nastavene na Paddle
-		fixtureDef.restitution = 1.03f; //zvysenie rychlosti po kazdom odraze
-		fixtureDef.friction = 0.001f; //trenie aby sa lopticka otacala a menil sa aj uhol odrazu
+		fixtureDef.restitution = 1.00f;
+		fixtureDef.friction = 0.001f;
 		fixtureDef.density = 1f;
 		fixtureDef.filter.categoryBits = BIT_POINT;
 		fixtureDef.filter.maskBits = BIT_POINT;
