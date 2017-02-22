@@ -22,14 +22,12 @@ public class PongGame extends ApplicationAdapter {
 	public static final int GAME_WIDTH = 1920;
 	public static final int GAME_HEIGHT = 1080;
 	public static final String GAME_NAME = "Pong";
-	public static final int POINT_OFFSET = 35;
 	private static final String SCORE_TEXT = "SCORE: ";
 
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera camera;
 	private Stage gameStage;
 	private PlayerActor player;
-	private TrampolineActor trampolineActor;
 	private TrampolineActor[] trampolines;
 	private ArrayList<PointActor> points;
 	private World world;
@@ -77,7 +75,6 @@ public class PongGame extends ApplicationAdapter {
 				if(actor instanceof PointActor &&
 						((PointActor)actor).getPointBody().getPosition().dst(player.getPlayerBody().getPosition()) < 20){
 					Vector2 pointPosition = ((PointActor)actor).getPointBody().getPosition();
-					//player.grabPoint((PointActor)actor, gameStage);
 					//TODO functionality of grab point
 					points.remove(((PointActor)actor));
 					actor.remove();

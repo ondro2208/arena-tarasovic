@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ArtifactManager">
-    <artifact type="exploded-war" name="Gradle : pongGame : html-draft-1.0.war (exploded)">
+    <artifact type="exploded-war" name="Gradle : arena-tarasovic : html-draft-1.0.war (exploded)">
       <output-path>$PROJECT_DIR$/html/build/libs/exploded/html-draft-1.0.war</output-path>
       <properties id="gradle-properties">
         <options external-project-path="$PROJECT_DIR$">
@@ -19,7 +19,7 @@
             <element id="dir-copy" path="$PROJECT_DIR$/html/build/resources/main" />
           </element>
           <element id="directory" name="lib">
-            <element id="archive" name="pongGame-core-1.0.jar">
+            <element id="archive" name="arena-tarasovic-core-1.0.jar">
               <element id="module-output" name="core_main" />
               <element id="dir-copy" path="$PROJECT_DIR$/core/build/resources/main" />
             </element>
@@ -40,16 +40,16 @@
         <element id="gwt-compiler-output" facet="html_main/gwt/GWT" />
       </root>
     </artifact>
-    <artifact type="war" name="Gradle : pongGame : html-draft-1.0.war">
+    <artifact type="war" name="Gradle : arena-tarasovic : html-draft-1.0.war">
       <output-path>$PROJECT_DIR$/html/build/libs</output-path>
       <properties id="gradle-properties">
         <options external-project-path="$PROJECT_DIR$" />
       </properties>
       <root id="archive" name="html-draft-1.0.war">
-        <element id="artifact" artifact-name="Gradle : pongGame : html-draft-1.0.war (exploded)" />
+        <element id="artifact" artifact-name="Gradle : arena-tarasovic : html-draft-1.0.war (exploded)" />
       </root>
     </artifact>
-    <artifact type="exploded-war" name="Gradle : pongGame : html-1.0.war (exploded)">
+    <artifact type="exploded-war" name="Gradle : arena-tarasovic : html-1.0.war (exploded)">
       <output-path>$PROJECT_DIR$/html/build/libs/exploded/html-1.0.war</output-path>
       <properties id="gradle-properties">
         <options external-project-path="$PROJECT_DIR$">
@@ -67,7 +67,7 @@
             <element id="dir-copy" path="$PROJECT_DIR$/html/build/resources/main" />
           </element>
           <element id="directory" name="lib">
-            <element id="archive" name="pongGame-core-1.0.jar">
+            <element id="archive" name="arena-tarasovic-core-1.0.jar">
               <element id="module-output" name="core_main" />
               <element id="dir-copy" path="$PROJECT_DIR$/core/build/resources/main" />
             </element>
@@ -88,13 +88,13 @@
         <element id="gwt-compiler-output" facet="html_main/gwt/GWT" />
       </root>
     </artifact>
-    <artifact type="war" name="Gradle : pongGame : html-1.0.war">
+    <artifact type="war" name="Gradle : arena-tarasovic : html-1.0.war">
       <output-path>$PROJECT_DIR$/html/build/libs</output-path>
       <properties id="gradle-properties">
         <options external-project-path="$PROJECT_DIR$" />
       </properties>
       <root id="archive" name="html-1.0.war">
-        <element id="artifact" artifact-name="Gradle : pongGame : html-1.0.war (exploded)" />
+        <element id="artifact" artifact-name="Gradle : arena-tarasovic : html-1.0.war (exploded)" />
       </root>
     </artifact>
   </component>
@@ -297,6 +297,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/arena-tarasovic.iml" filepath="$PROJECT_DIR$/.idea/modules/arena-tarasovic.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_main.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_test.iml" group="core" />
@@ -306,7 +307,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/html/html.iml" filepath="$PROJECT_DIR$/.idea/modules/html/html.iml" group="html" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/html/html_main.iml" filepath="$PROJECT_DIR$/.idea/modules/html/html_main.iml" group="html" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/html/html_test.iml" filepath="$PROJECT_DIR$/.idea/modules/html/html_test.iml" group="html" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/pongGame.iml" filepath="$PROJECT_DIR$/.idea/modules/pongGame.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" project-jdk-name="1.8" project-jdk-type="JavaSDK">

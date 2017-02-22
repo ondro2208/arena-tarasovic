@@ -4,10 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import java.util.Random;
 
@@ -48,7 +46,6 @@ public class PointActor extends BodyTemplate {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		//sprite.setSize(POINT_SIZE,POINT_SIZE);
 		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2); //nastav bod otacania na stred textury
 		sprite.setCenter(getX(),getY()); //nastav poziciu podla stredu, aby som nemusel riesit offset posunutia textury
 		sprite.draw(batch);
@@ -77,7 +74,7 @@ public class PointActor extends BodyTemplate {
 	@Override
 	protected BodyDef getBodyDef(){
 		BodyDef bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.KinematicBody;
+		bodyDef.type = BodyDef.BodyType.StaticBody;
 		bodyDef.position.set(x,y);
 		return bodyDef;
 	}
@@ -90,9 +87,9 @@ public class PointActor extends BodyTemplate {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		//Ball nepotrebuje restitution lebo to je nastavene na Paddle
-		//fixtureDef.restitution = 1.03f; //zvysenie rychlosti po kazdom odraze
-		//fixtureDef.friction = 0.001f; //trenie aby sa lopticka otacala a menil sa aj uhol odrazu
-		//fixtureDef.density = 1f;
+		fixtureDef.restitution = 1.03f; //zvysenie rychlosti po kazdom odraze
+		fixtureDef.friction = 0.001f; //trenie aby sa lopticka otacala a menil sa aj uhol odrazu
+		fixtureDef.density = 1f;
 		fixtureDef.filter.categoryBits = BIT_POINT;
 		fixtureDef.filter.maskBits = BIT_POINT;
 		fixtureDef.filter.groupIndex = 0;

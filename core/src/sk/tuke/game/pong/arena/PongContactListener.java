@@ -10,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  */
 public class PongContactListener implements ContactListener {
     private PlayerActor playerActor;
-    private int counter;
 
     public PongContactListener(PlayerActor playerActor)
     {
