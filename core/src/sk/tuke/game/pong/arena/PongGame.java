@@ -10,54 +10,60 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import sk.tuke.game.pong.arena.actors.PlayerActor;
+import sk.tuke.game.pong.arena.actors.PointActor;
+import sk.tuke.game.pong.arena.actors.TrampolineActor;
+import sk.tuke.game.pong.student.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class PongGame extends ApplicationAdapter {
-
-	public static final int GAME_WIDTH = 1920;
-	public static final int GAME_HEIGHT = 1080;
-	public static final String GAME_NAME = "Pong";
-	private static final String SCORE_TEXT = "SCORE: ";
+public class PongGame extends ApplicationAdapter implements Contact {
 
 	private Box2DDebugRenderer debugRenderer;
 	private OrthographicCamera camera;
 	private Stage gameStage;
-	private PlayerActor player;
 	private TrampolineActor[] trampolines;
 	private ArrayList<PointActor> points;
+	private ArrayList<PlayerActor> players;
 	private World world;
+	private Player student;
+	private List<DirAndPos> path;
 
 	private Texture backgroundImage;
 	private Label scoreText;
 	private int score = 0;
 
+	private boolean start = true;
+
+	public static int[][] positions = new int[][]{
+			{GameInfo.GAME_WIDTH / 4, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4)},
+			{GameInfo.GAME_WIDTH / 2, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4)},
+			{GameInfo.GAME_WIDTH - (GameInfo.GAME_WIDTH / 4), GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4)},
+			{GameInfo.GAME_WIDTH / 4, GameInfo.GAME_HEIGHT / 4},
+			{GameInfo.GAME_WIDTH / 2, GameInfo.GAME_HEIGHT / 4},
+			{GameInfo.GAME_WIDTH - (GameInfo.GAME_WIDTH / 4), GameInfo.GAME_HEIGHT / 4}
+	};
+
 	@Override
 	public void create () {
 		camera = new OrthographicCamera();
 		debugRenderer = new Box2DDebugRenderer();
-		camera.setToOrtho(false,GAME_WIDTH,GAME_HEIGHT);
-		camera.position.set(GAME_WIDTH/2f,GAME_HEIGHT/2f,0);
-
+		camera.setToOrtho(false, GameInfo.GAME_WIDTH / GameInfo.PPM, GameInfo.GAME_HEIGHT / GameInfo.PPM);
 		world = new World(new Vector2(0, 0), true);
 		backgroundImage = new Texture(Gdx.files.internal("bg.png"));
-
 		gameStage = new Stage(new ScreenViewport());
-		player = new PlayerActor();
+		student = new Player();
 
+		playerInitialize();
 		trampolineInitialize();
 		pointInitialize();
-		gameStage.addActor(player);
-		player.createBody(world);
-
 		createScore();
 		gameStage.addActor(scoreText);
-
-		world.setContactListener(new PongContactListener(player));
+		world.setContactListener(new PongContactListener(this));
 	}
 
 
@@ -70,29 +76,11 @@ public class PongGame extends ApplicationAdapter {
 			Gdx.app.exit();
 		}
 		gameStage.act();
-		if(points.size()>0) {
-			for(Actor actor : gameStage.getActors()){
-				if(actor instanceof PointActor &&
-						((PointActor)actor).getPointBody().getPosition().dst(player.getPlayerBody().getPosition()) < 20){
-					Vector2 pointPosition = ((PointActor)actor).getPointBody().getPosition();
-					//TODO functionality of grab point
-					points.remove(actor);
-					actor.remove();
-					updateScore();
-					PointActor newPoint = ((PointActor)actor).generateNewPoint(pointPosition);
-					newPoint.createBody(world);
-					gameStage.addActor(newPoint);
-					points.add(0,newPoint);
-					break;
-				}
-			}
-		}
+		update();
 		gameStage.getBatch().begin();
-		gameStage.getBatch().draw(backgroundImage,0,0,GAME_WIDTH,GAME_HEIGHT);
+		gameStage.getBatch().draw(backgroundImage, 0, 0, GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
 		gameStage.getBatch().end();
-		if(player.getPlayerBody() != null)
-			gameStage.draw();
-
+		gameStage.draw();
 		debugRenderer.render(world,camera.combined);
 		world.step(1 / 60f, 6, 2);/*Gdx.graphics.getDeltaTime()*/
 	}
@@ -101,6 +89,35 @@ public class PongGame extends ApplicationAdapter {
 	public void dispose () {
 		backgroundImage.dispose();
 		gameStage.dispose();
+	}
+
+	private void update() {
+		if (points.size() > 0) {
+			for (int i = 0; i < points.size(); i++) {
+				Vector2 pointPosition = new Vector2(points.get(i).getPointX(), points.get(i).getPointY());
+				for (int j = 0; j < points.size(); j++) {
+					Vector2 playerPosition = new Vector2(players.get(i).getPlayerX(), players.get(i).getPlayerY());
+					if (pointPosition.dst(playerPosition) < 50) {
+						points.get(i).remove();
+						points.remove(points.get(i));
+						updateScore();
+						PointActor newPoint = new PointActor(pointPosition);
+						newPoint.createBody(world);
+						gameStage.addActor(newPoint);
+						this.points.add(0, newPoint);
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	private void playerInitialize() {
+		players = new ArrayList<PlayerActor>();
+		PlayerActor player = new PlayerActor();
+		player.createBody(world);
+		gameStage.addActor(player);
+		players.add(0, player);
 	}
 
 
@@ -114,17 +131,18 @@ public class PongGame extends ApplicationAdapter {
 
 	private void trampolineInitialize() {
 		trampolines = new TrampolineActor[]{
-				new TrampolineActor(Gdx.graphics.getWidth() / 4 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
-				new TrampolineActor(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
-				new TrampolineActor(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/4) , Gdx.graphics.getHeight()-(Gdx.graphics.getHeight() / 4)),
-				new TrampolineActor(Gdx.graphics.getWidth() / 4 ,Gdx.graphics.getHeight() / 4),
-				new TrampolineActor(Gdx.graphics.getWidth() / 2 ,Gdx.graphics.getHeight() / 4),
-				new TrampolineActor(Gdx.graphics.getWidth() - (Gdx.graphics.getWidth()/4) ,Gdx.graphics.getHeight() / 4)
+				new TrampolineActor(DirAndPos.UP_LEFT, positions[0][0], positions[0][1]),
+				new TrampolineActor(DirAndPos.UP, positions[1][0], positions[1][1]),
+				new TrampolineActor(DirAndPos.UP_RIGHT, positions[2][0], positions[2][1]),
+				new TrampolineActor(DirAndPos.DOWN_LEFT, positions[3][0], positions[3][1]),
+				new TrampolineActor(DirAndPos.DOWN, positions[4][0], positions[4][1]),
+				new TrampolineActor(DirAndPos.DOWN_RIGHT, positions[5][0], positions[5][1])
 		};
 		for(int i=0;i<6;i++){
 			gameStage.addActor(trampolines[i]);
-			trampolines[i].createBody(world);
+			trampolines[i].createJsonBody(world);
 		}
+
 	}
 
 	private Label createScore(){
@@ -134,7 +152,7 @@ public class PongGame extends ApplicationAdapter {
 		textStyle = new Label.LabelStyle();
 		textStyle.font = font;
 
-		scoreText = new Label(SCORE_TEXT + score,textStyle);
+		scoreText = new Label(GameInfo.SCORE_TEXT + score, textStyle);
 		scoreText.setBounds(Gdx.graphics.getWidth()-100,Gdx.graphics.getHeight()-80,90,70);
 		scoreText.setFontScale(1f,1f);
 		return scoreText;
@@ -142,7 +160,142 @@ public class PongGame extends ApplicationAdapter {
 
 	private void updateScore(){
 		this.score++;
-		scoreText.setText(SCORE_TEXT+score);
+		scoreText.setText(GameInfo.SCORE_TEXT + score);
 	}
 
+	private void setTarget(PlayerActor player, DirAndPos newDirection) {
+		float x = player.getPlayerX();
+		float y = player.getPlayerY();
+		int offset = 50;
+		switch (newDirection) {
+			case UP_LEFT: {
+				if (x >= PointActor.pointsPositions[1][0] - offset && x <= PointActor.pointsPositions[1][0] + offset) {
+					x = PointActor.pointsPositions[0][0];
+					y = PointActor.pointsPositions[0][1];
+				} else if (x >= PointActor.pointsPositions[2][0] - offset && x <= PointActor.pointsPositions[2][0] + offset) {
+					x = PointActor.pointsPositions[1][0];
+					y = PointActor.pointsPositions[1][1];
+				}
+				player.updateVector(x, y);
+				break;
+			}
+			case UP: {
+				if (x >= PointActor.pointsPositions[0][0] - offset && x <= PointActor.pointsPositions[0][0] + offset) {
+					x = PointActor.pointsPositions[0][0];
+					y = PointActor.pointsPositions[0][1];
+				} else if (x >= PointActor.pointsPositions[1][0] - offset && x <= PointActor.pointsPositions[1][0] + offset) {
+					x = PointActor.pointsPositions[1][0];
+					y = PointActor.pointsPositions[1][1];
+				} else if (x >= PointActor.pointsPositions[2][0] - offset && x <= PointActor.pointsPositions[2][0] + offset) {
+					x = PointActor.pointsPositions[2][0];
+					y = PointActor.pointsPositions[2][1];
+				}
+				player.updateVector(x, y);
+				break;
+			}
+			case UP_RIGHT: {
+				if (x >= PointActor.pointsPositions[0][0] - offset && x <= PointActor.pointsPositions[0][0] + offset) {
+					x = PointActor.pointsPositions[1][0];
+					y = PointActor.pointsPositions[1][1];
+				} else if (x >= PointActor.pointsPositions[1][0] - offset && x <= PointActor.pointsPositions[1][0] + offset) {
+					x = PointActor.pointsPositions[2][0];
+					y = PointActor.pointsPositions[2][1];
+				}
+				player.updateVector(x, y);
+				break;
+			}
+			case DOWN_LEFT: {
+				if (x >= PointActor.pointsPositions[1][0] - 100 && x <= PointActor.pointsPositions[1][0] + 100) {
+					x = PointActor.pointsPositions[3][0];
+					y = PointActor.pointsPositions[3][1];
+				} else if (x >= PointActor.pointsPositions[2][0] - offset && x <= PointActor.pointsPositions[2][0] + offset) {
+					x = PointActor.pointsPositions[4][0];
+					y = PointActor.pointsPositions[4][1];
+				}
+				player.updateVector(x, y);
+				break;
+			}
+			case DOWN: {
+				if (x >= PointActor.pointsPositions[0][0] - offset && x <= PointActor.pointsPositions[0][0] + offset) {
+					x = PointActor.pointsPositions[3][0];
+					y = PointActor.pointsPositions[3][1];
+				} else if (x >= PointActor.pointsPositions[1][0] - offset && x <= PointActor.pointsPositions[1][0] + offset) {
+					x = PointActor.pointsPositions[4][0];
+					y = PointActor.pointsPositions[4][1];
+				} else if (x >= PointActor.pointsPositions[2][0] - offset && x <= PointActor.pointsPositions[2][0] + offset) {
+					x = PointActor.pointsPositions[5][0];
+					y = PointActor.pointsPositions[5][1];
+				}
+				player.updateVector(x, y);
+				break;
+			}
+			case DOWN_RIGHT: {
+				if (x >= PointActor.pointsPositions[0][0] - offset && x <= PointActor.pointsPositions[0][0] + offset) {
+					x = PointActor.pointsPositions[4][0];
+					y = PointActor.pointsPositions[4][1];
+				} else if (x >= PointActor.pointsPositions[1][0] - offset && x <= PointActor.pointsPositions[1][0] + offset) {
+					x = PointActor.pointsPositions[5][0];
+					y = PointActor.pointsPositions[5][1];
+				}
+				player.updateVector(x, y);
+				break;
+			}
+			default: {
+				player.updateVector(x, y);
+			}
+		}
+	}
+
+	private List<DirAndPos> getAllowedNextDirections(DirAndPos direction) {
+		List<DirAndPos> allowedDirections = new ArrayList<DirAndPos>();
+		switch (direction) {
+			case UP_LEFT: {
+				allowedDirections.add(DirAndPos.DOWN);
+				allowedDirections.add(DirAndPos.DOWN_LEFT);
+				break;
+			}
+			case UP: {
+				allowedDirections.add(DirAndPos.DOWN);
+				allowedDirections.add(DirAndPos.DOWN_LEFT);
+				allowedDirections.add(DirAndPos.DOWN_RIGHT);
+				break;
+			}
+			case UP_RIGHT: {
+				allowedDirections.add(DirAndPos.DOWN);
+				allowedDirections.add(DirAndPos.DOWN_RIGHT);
+				break;
+			}
+			case DOWN_LEFT: {
+				allowedDirections.add(DirAndPos.UP);
+				allowedDirections.add(DirAndPos.UP_LEFT);
+				break;
+			}
+			case DOWN: {
+				allowedDirections.add(DirAndPos.UP);
+				allowedDirections.add(DirAndPos.UP_LEFT);
+				allowedDirections.add(DirAndPos.UP_RIGHT);
+				break;
+			}
+			case DOWN_RIGHT: {
+				allowedDirections.add(DirAndPos.UP);
+				allowedDirections.add(DirAndPos.UP_RIGHT);
+				break;
+			}
+
+		}
+		return allowedDirections;
+	}
+
+	@Override
+	public void contact(PlayerActor player) {
+		DirAndPos newDirection = student.getPathToPoint(player.getDirection(), points.get(0), player);
+		List<DirAndPos> allowedDir = getAllowedNextDirections(player.getDirection());
+		if (allowedDir.contains(newDirection)) {
+			setTarget(player, newDirection);
+			player.setDirection(newDirection);
+		} else {
+			setTarget(player, allowedDir.get(0));
+			player.setDirection(allowedDir.get(0));
+		}
+	}
 }
