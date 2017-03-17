@@ -13,9 +13,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import sk.tuke.game.pong.arena.actors.EnemyActor;
 import sk.tuke.game.pong.arena.actors.PlayerActor;
 import sk.tuke.game.pong.arena.actors.PointActor;
 import sk.tuke.game.pong.arena.actors.TrampolineActor;
+import sk.tuke.game.pong.interfaces.Enemy;
 import sk.tuke.game.pong.student.Player;
 
 import java.util.ArrayList;
@@ -29,17 +31,18 @@ public class PongGame extends ApplicationAdapter implements Contact {
 	private TrampolineActor[] trampolines;
 	private ArrayList<PointActor> points;
 	private ArrayList<PlayerActor> players;
+	private ArrayList<EnemyActor> enemies;
 	private World world;
 	private Player student;
-	private List<DirAndPos> path;
 
 	private Texture backgroundImage;
 	private Label scoreText;
 	private int score = 0;
 
-	private boolean start = true;
+	private int generateEnemy;
+	private int turnBack;
 
-	public static int[][] positions = new int[][]{
+	public static float[][] positions = new float[][]{
 			{GameInfo.GAME_WIDTH / 4, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4)},
 			{GameInfo.GAME_WIDTH / 2, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4)},
 			{GameInfo.GAME_WIDTH - (GameInfo.GAME_WIDTH / 4), GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4)},
@@ -49,7 +52,7 @@ public class PongGame extends ApplicationAdapter implements Contact {
 	};
 
 	@Override
-	public void create () {
+	public void create() {
 		camera = new OrthographicCamera();
 		debugRenderer = new Box2DDebugRenderer();
 		camera.setToOrtho(false, GameInfo.GAME_WIDTH / GameInfo.PPM, GameInfo.GAME_HEIGHT / GameInfo.PPM);
@@ -57,6 +60,7 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		backgroundImage = new Texture(Gdx.files.internal("bg.png"));
 		gameStage = new Stage(new ScreenViewport());
 		student = new Player();
+		enemies = new ArrayList<EnemyActor>();
 
 		playerInitialize();
 		trampolineInitialize();
@@ -67,12 +71,10 @@ public class PongGame extends ApplicationAdapter implements Contact {
 	}
 
 
-
 	@Override
-	public void render () {
-
+	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			Gdx.app.exit();
 		}
 		gameStage.act();
@@ -81,17 +83,27 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		gameStage.getBatch().draw(backgroundImage, 0, 0, GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
 		gameStage.getBatch().end();
 		gameStage.draw();
-		debugRenderer.render(world,camera.combined);
+		debugRenderer.render(world, camera.combined);
 		world.step(1 / 60f, 6, 2);/*Gdx.graphics.getDeltaTime()*/
 	}
-	
+
 	@Override
-	public void dispose () {
+	public void dispose() {
 		backgroundImage.dispose();
 		gameStage.dispose();
 	}
 
 	private void update() {
+		generateEnemy++;
+		turnBack++;
+		if (generateEnemy % 200 == 0) {
+			generateEnemies();
+			generateEnemy = 0;
+		}
+		if (student.turnBack(players.get(0), convertListToEnemy()) && turnBack % 100 == 0) {
+			turnBack();
+			turnBack = 0;
+		}
 		if (points.size() > 0) {
 			for (int i = 0; i < points.size(); i++) {
 				Vector2 pointPosition = new Vector2(points.get(i).getPointX(), points.get(i).getPointY());
@@ -112,6 +124,91 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		}
 	}
 
+	private void turnBack() {
+		for (PlayerActor player : players) {
+			switch (player.getDirection()) {
+				case DOWN_LEFT: {
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[3])) {
+						player.updateVector(PointActor.pointsPositions[1][0], PointActor.pointsPositions[1][1]);
+						player.setDirection(Direction.UP_RIGHT);
+					}
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[4])) {
+						player.updateVector(PointActor.pointsPositions[2][0], PointActor.pointsPositions[2][1]);
+						player.setDirection(Direction.UP_RIGHT);
+					}
+					break;
+				}
+				case DOWN: {
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[3])) {
+						player.updateVector(PointActor.pointsPositions[0][0], PointActor.pointsPositions[0][1]);
+						player.setDirection(Direction.UP);
+					}
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[4])) {
+						player.updateVector(PointActor.pointsPositions[1][0], PointActor.pointsPositions[1][1]);
+						player.setDirection(Direction.UP);
+					}
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[5])) {
+						player.updateVector(PointActor.pointsPositions[2][0], PointActor.pointsPositions[2][1]);
+						player.setDirection(Direction.UP);
+					}
+					break;
+				}
+				case DOWN_RIGHT: {
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[4])) {
+						player.updateVector(PointActor.pointsPositions[0][0], PointActor.pointsPositions[0][1]);
+						player.setDirection(Direction.UP_LEFT);
+					}
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[5])) {
+						player.updateVector(PointActor.pointsPositions[1][0], PointActor.pointsPositions[1][1]);
+						player.setDirection(Direction.UP_LEFT);
+					}
+					break;
+				}
+				case UP_LEFT: {
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[0])) {
+						player.updateVector(PointActor.pointsPositions[4][0], PointActor.pointsPositions[4][1]);
+						player.setDirection(Direction.DOWN_RIGHT);
+					}
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[1])) {
+						player.updateVector(PointActor.pointsPositions[5][0], PointActor.pointsPositions[5][1]);
+						player.setDirection(Direction.DOWN_RIGHT);
+					}
+					break;
+				}
+				case UP: {
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[0])) {
+						player.updateVector(PointActor.pointsPositions[3][0], PointActor.pointsPositions[3][1]);
+						player.setDirection(Direction.DOWN);
+					}
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[1])) {
+						player.updateVector(PointActor.pointsPositions[4][0], PointActor.pointsPositions[4][1]);
+						player.setDirection(Direction.DOWN);
+					}
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[2])) {
+						player.updateVector(PointActor.pointsPositions[5][0], PointActor.pointsPositions[5][1]);
+						player.setDirection(Direction.DOWN);
+					}
+					break;
+				}
+				case UP_RIGHT: {
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[1])) {
+						player.updateVector(PointActor.pointsPositions[3][0], PointActor.pointsPositions[3][1]);
+						player.setDirection(Direction.DOWN_LEFT);
+					}
+					if (isTargetCoordinates(player.getTargetVector(), PointActor.pointsPositions[2])) {
+						player.updateVector(PointActor.pointsPositions[4][0], PointActor.pointsPositions[4][1]);
+						player.setDirection(Direction.DOWN_LEFT);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	private boolean isTargetCoordinates(float[] player, float[] point) {
+		return (player[0] == point[0] && player[1] == point[1]);
+	}
+
 	private void playerInitialize() {
 		players = new ArrayList<PlayerActor>();
 		PlayerActor player = new PlayerActor();
@@ -121,31 +218,38 @@ public class PongGame extends ApplicationAdapter implements Contact {
 	}
 
 
-	private void pointInitialize(){
+	private void pointInitialize() {
 		points = new ArrayList<PointActor>();
-		PointActor point = new PointActor(PointActor.pointsPositions[1][0] , PointActor.pointsPositions[1][1]);
+		PointActor point = new PointActor(PointActor.pointsPositions[1][0], PointActor.pointsPositions[1][1]);
 		point.createBody(world);
 		gameStage.addActor(point);
-		points.add(0,point);
+		points.add(0, point);
 	}
 
 	private void trampolineInitialize() {
 		trampolines = new TrampolineActor[]{
-				new TrampolineActor(DirAndPos.UP_LEFT, positions[0][0], positions[0][1]),
-				new TrampolineActor(DirAndPos.UP, positions[1][0], positions[1][1]),
-				new TrampolineActor(DirAndPos.UP_RIGHT, positions[2][0], positions[2][1]),
-				new TrampolineActor(DirAndPos.DOWN_LEFT, positions[3][0], positions[3][1]),
-				new TrampolineActor(DirAndPos.DOWN, positions[4][0], positions[4][1]),
-				new TrampolineActor(DirAndPos.DOWN_RIGHT, positions[5][0], positions[5][1])
+				new TrampolineActor(positions[0][0], positions[0][1]),
+				new TrampolineActor(positions[1][0], positions[1][1]),
+				new TrampolineActor(positions[2][0], positions[2][1]),
+				new TrampolineActor(positions[3][0], positions[3][1]),
+				new TrampolineActor(positions[4][0], positions[4][1]),
+				new TrampolineActor(positions[5][0], positions[5][1])
 		};
-		for(int i=0;i<6;i++){
+		for (int i = 0; i < 6; i++) {
 			gameStage.addActor(trampolines[i]);
-			trampolines[i].createJsonBody(world);
+			trampolines[i].createBody(world);
 		}
-
 	}
 
-	private Label createScore(){
+	private void generateEnemies() {
+		EnemyActor enemy = new EnemyActor();
+		gameStage.addActor(enemy);
+		enemy.createBody(world);
+		enemies.add(enemy);
+		enemy.setImpulse(enemy.getEnemyX());
+	}
+
+	private Label createScore() {
 		Label.LabelStyle textStyle;
 		BitmapFont font = new BitmapFont();
 
@@ -153,17 +257,25 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		textStyle.font = font;
 
 		scoreText = new Label(GameInfo.SCORE_TEXT + score, textStyle);
-		scoreText.setBounds(Gdx.graphics.getWidth()-100,Gdx.graphics.getHeight()-80,90,70);
-		scoreText.setFontScale(1f,1f);
+		scoreText.setBounds(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 80, 90, 70);
+		scoreText.setFontScale(1f, 1f);
 		return scoreText;
 	}
 
-	private void updateScore(){
+	private void updateScore() {
 		this.score++;
 		scoreText.setText(GameInfo.SCORE_TEXT + score);
 	}
 
-	private void setTarget(PlayerActor player, DirAndPos newDirection) {
+	private ArrayList<Enemy> convertListToEnemy() {
+		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+		for (EnemyActor enemy : this.enemies) {
+			enemies.add(enemy);
+		}
+		return enemies;
+	}
+
+	private void setTarget(PlayerActor player, Direction newDirection) {
 		float x = player.getPlayerX();
 		float y = player.getPlayerY();
 		int offset = 50;
@@ -246,39 +358,39 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		}
 	}
 
-	private List<DirAndPos> getAllowedNextDirections(DirAndPos direction) {
-		List<DirAndPos> allowedDirections = new ArrayList<DirAndPos>();
+	private List<Direction> getAllowedNextDirections(Direction direction) {
+		List<Direction> allowedDirections = new ArrayList<Direction>();
 		switch (direction) {
 			case UP_LEFT: {
-				allowedDirections.add(DirAndPos.DOWN);
-				allowedDirections.add(DirAndPos.DOWN_LEFT);
+				allowedDirections.add(Direction.DOWN);
+				allowedDirections.add(Direction.DOWN_LEFT);
 				break;
 			}
 			case UP: {
-				allowedDirections.add(DirAndPos.DOWN);
-				allowedDirections.add(DirAndPos.DOWN_LEFT);
-				allowedDirections.add(DirAndPos.DOWN_RIGHT);
+				allowedDirections.add(Direction.DOWN);
+				allowedDirections.add(Direction.DOWN_LEFT);
+				allowedDirections.add(Direction.DOWN_RIGHT);
 				break;
 			}
 			case UP_RIGHT: {
-				allowedDirections.add(DirAndPos.DOWN);
-				allowedDirections.add(DirAndPos.DOWN_RIGHT);
+				allowedDirections.add(Direction.DOWN);
+				allowedDirections.add(Direction.DOWN_RIGHT);
 				break;
 			}
 			case DOWN_LEFT: {
-				allowedDirections.add(DirAndPos.UP);
-				allowedDirections.add(DirAndPos.UP_LEFT);
+				allowedDirections.add(Direction.UP);
+				allowedDirections.add(Direction.UP_LEFT);
 				break;
 			}
 			case DOWN: {
-				allowedDirections.add(DirAndPos.UP);
-				allowedDirections.add(DirAndPos.UP_LEFT);
-				allowedDirections.add(DirAndPos.UP_RIGHT);
+				allowedDirections.add(Direction.UP);
+				allowedDirections.add(Direction.UP_LEFT);
+				allowedDirections.add(Direction.UP_RIGHT);
 				break;
 			}
 			case DOWN_RIGHT: {
-				allowedDirections.add(DirAndPos.UP);
-				allowedDirections.add(DirAndPos.UP_RIGHT);
+				allowedDirections.add(Direction.UP);
+				allowedDirections.add(Direction.UP_RIGHT);
 				break;
 			}
 
@@ -288,8 +400,8 @@ public class PongGame extends ApplicationAdapter implements Contact {
 
 	@Override
 	public void contact(PlayerActor player) {
-		DirAndPos newDirection = student.getPathToPoint(player.getDirection(), points.get(0), player);
-		List<DirAndPos> allowedDir = getAllowedNextDirections(player.getDirection());
+		Direction newDirection = student.getNextDirection(points.get(0), player);
+		List<Direction> allowedDir = getAllowedNextDirections(player.getDirection());
 		if (allowedDir.contains(newDirection)) {
 			setTarget(player, newDirection);
 			player.setDirection(newDirection);

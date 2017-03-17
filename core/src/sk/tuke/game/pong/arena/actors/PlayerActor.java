@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import sk.tuke.game.pong.arena.BodyTemplate;
-import sk.tuke.game.pong.arena.DirAndPos;
+import sk.tuke.game.pong.arena.Direction;
 import sk.tuke.game.pong.arena.GameInfo;
 import sk.tuke.game.pong.interfaces.Player;
 
@@ -21,20 +21,22 @@ public class PlayerActor extends BodyTemplate implements Player {
 
 	private static final int RADIUS = 40;
 	private static final int PLAYER_SIZE = 80;
-	private DirAndPos direction;
+	private Direction direction;
+	private float[] targetVector;
 
 	public PlayerActor() {
-		direction = DirAndPos.UP;
+		direction = Direction.UP;
 		image = new Texture(Gdx.files.internal("player.png"));
 		sprite = new Sprite(image);
 		sprite.setSize(PLAYER_SIZE, PLAYER_SIZE);
 		setPosition(GameInfo.GAME_WIDTH / 2, GameInfo.GAME_HEIGHT / 2);
+		targetVector = new float[2];
 	}
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		sprite.setPosition((physicsBody.getPosition().x * GameInfo.PPM - sprite.getWidth() / 2), (physicsBody.getPosition().y * GameInfo.PPM - sprite.getHeight() / 2));
-		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
+		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.draw(batch);
 	}
 
@@ -64,13 +66,15 @@ public class PlayerActor extends BodyTemplate implements Player {
 	@Override
 	public void act(float delta) {
 		if (physicsBody != null) {
-			if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
+			if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
 				updateVector(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() / 4));
 		}
 
 	}
 
 	public void updateVector(float x, float y) {
+		targetVector[0] = x;
+		targetVector[1] = y;
 		float mass = physicsBody.getMass();
 		float targetVelocity = 20;
 		Vector2 targetPosition = new Vector2(x / GameInfo.PPM, y / GameInfo.PPM);
@@ -82,7 +86,7 @@ public class PlayerActor extends BodyTemplate implements Player {
 	}
 
 	@Override
-	public DirAndPos getDirection() {
+	public Direction getDirection() {
 		return direction;
 	}
 
@@ -97,7 +101,11 @@ public class PlayerActor extends BodyTemplate implements Player {
 	}
 
 	@Override
-	public void setDirection(DirAndPos direction) {
+	public void setDirection(Direction direction) {
 		this.direction = direction;
+	}
+
+	public float[] getTargetVector() {
+		return targetVector;
 	}
 }

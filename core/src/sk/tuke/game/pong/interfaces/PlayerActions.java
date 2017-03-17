@@ -1,10 +1,14 @@
 package sk.tuke.game.pong.interfaces;
 
-import sk.tuke.game.pong.arena.DirAndPos;
+import sk.tuke.game.pong.arena.Direction;
+
+import java.util.ArrayList;
 
 /**
  * Created by otara on 24.2.2017.
  */
 public interface PlayerActions {
-	DirAndPos getPathToPoint(DirAndPos dir, Point point, Player actor);
+	Direction getNextDirection(Point point, Player actor);
+
+	boolean turnBack(Player actor, ArrayList<Enemy> enemies);
 }

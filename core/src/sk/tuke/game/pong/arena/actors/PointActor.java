@@ -23,7 +23,7 @@ public class PointActor extends BodyTemplate implements Point {
 	private static final int POINT_OFFSET = 20;
 	private final int RADIUS = 10;
 
-	public static int[][] pointsPositions = new int[][]{
+	public static float[][] pointsPositions = new float[][]{
 			{GameInfo.GAME_WIDTH / 4, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4) - POINT_OFFSET},
 			{GameInfo.GAME_WIDTH / 2, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4) - POINT_OFFSET},
 			{GameInfo.GAME_WIDTH - (GameInfo.GAME_WIDTH / 4), GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4) - POINT_OFFSET},
@@ -32,10 +32,10 @@ public class PointActor extends BodyTemplate implements Point {
 			{GameInfo.GAME_WIDTH - (GameInfo.GAME_WIDTH / 4), GameInfo.GAME_HEIGHT / 4 + POINT_OFFSET}
 	};
 
-	public PointActor(int x, int y) {
+	public PointActor(float x, float y) {
 		image = new Texture(Gdx.files.internal("point.jpg"));
 		sprite = new Sprite(image);
-		setPosition(x,y);
+		setPosition(x, y);
 		sprite.setSize(POINT_SIZE, POINT_SIZE);
 	}
 
@@ -44,7 +44,7 @@ public class PointActor extends BodyTemplate implements Point {
 		sprite = new Sprite(image);
 		int n = generateNewPointPosition(vector.x, vector.y);
 		setPosition(pointsPositions[n][0], pointsPositions[n][1]);
-		sprite.setSize(POINT_SIZE,POINT_SIZE);
+		sprite.setSize(POINT_SIZE, POINT_SIZE);
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class PointActor extends BodyTemplate implements Point {
 	}
 
 	@Override
-	protected BodyDef getBodyDef(){
+	protected BodyDef getBodyDef() {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyDef.BodyType.StaticBody;
 		bodyDef.position.set(getX() / GameInfo.PPM, getY() / GameInfo.PPM);
@@ -69,16 +69,13 @@ public class PointActor extends BodyTemplate implements Point {
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		fixtureDef.restitution = 1.00f;
-		fixtureDef.friction = 0.001f;
-		fixtureDef.density = 1f;
 		fixtureDef.filter.categoryBits = GameInfo.FILTER_POINT_BIT;
 		fixtureDef.filter.maskBits = GameInfo.FILTER_POINT_BIT;
 		fixtureDef.filter.groupIndex = 0;
 		return fixtureDef;
 	}
 
-	private PointActor generateNewPoint(float oldX, float oldY) {
+	/*private PointActor generateNewPoint(float oldX, float oldY) {
 		int n, x, y;
 		n = generateRandomPosition();
 		x = pointsPositions[n][0];
@@ -92,10 +89,11 @@ public class PointActor extends BodyTemplate implements Point {
 
 		PointActor point = new PointActor(x,y);
 		return point;
-	}
+	}*/
 
 	private int generateNewPointPosition(float oldX, float oldY) {
-		int n, x, y;
+		int n;
+		float x, y;
 		n = generateRandomPosition();
 		x = pointsPositions[n][0];
 		y = pointsPositions[n][1];
@@ -110,16 +108,8 @@ public class PointActor extends BodyTemplate implements Point {
 	private int generateRandomPosition() {
 		Random rand = new Random();
 		int n = rand.nextInt(56) + 6;
-		System.out.println("before round: " + n);
-		n = Math.round(n / (float)10);
-		System.out.println("after round: " + n);
-		return n-1;
-		/*int n = rand.nextInt(2);
-		if(n==0){
-			return 2-1;
-		}
-		else
-			return 5-1;*/
+		n = Math.round(n / (float) 10);
+		return n - 1;
 	}
 
 	@Override

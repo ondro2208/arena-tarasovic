@@ -8,23 +8,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import sk.tuke.game.pong.arena.BodyTemplate;
-import sk.tuke.game.pong.arena.DirAndPos;
 import sk.tuke.game.pong.arena.GameInfo;
+import sk.tuke.game.pong.arena.JsonBodyTemplate;
 
 /**
  * Created by otara on 22.1.2017.
  */
-public class TrampolineActor extends BodyTemplate {
+public class TrampolineActor extends JsonBodyTemplate {
 
-	private DirAndPos location;
 	private static final int TRAMPOLINE_WIDTH = 200;
 	private static final int TRAMPOLINE_HEIGHT = 38;
 
-	public TrampolineActor(DirAndPos location, int x, int y) {
+	public TrampolineActor(float x, float y) {
 		image = new Texture(Gdx.files.internal("trampoline.png"));
 		sprite = new Sprite(image);
-		this.location = location;
 		setPosition(x, y);
 		jsonFile = "trampoline.json";
 		name = "trampolineBodyJson";
@@ -43,7 +40,6 @@ public class TrampolineActor extends BodyTemplate {
 
 	@Override
 	protected BodyDef getBodyDef() {
-
 		BodyDef bd = new BodyDef();
 		bd.position.set(getX() / GameInfo.PPM, getY() / GameInfo.PPM);
 		bd.type = BodyDef.BodyType.StaticBody;
@@ -53,9 +49,6 @@ public class TrampolineActor extends BodyTemplate {
 	@Override
 	protected FixtureDef getFixtureDef() {
 		FixtureDef fd = new FixtureDef();
-		fd.density = 100f;
-		fd.friction = 0.000f;
-		fd.restitution = 1.0f;
 		fd.filter.categoryBits = GameInfo.FILTER_TRAMPOLINE_BIT;
 		fd.filter.maskBits = GameInfo.FILTER_PLAYER_BIT;
 		fd.filter.groupIndex = 0;

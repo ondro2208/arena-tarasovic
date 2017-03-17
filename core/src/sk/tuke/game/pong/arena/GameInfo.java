@@ -4,7 +4,7 @@ package sk.tuke.game.pong.arena;
  * Created by otara on 3.3.2017.
  */
 public class GameInfo {
-	public static final String GAME_NAME = "Pong";
+	public static final String GAME_NAME = "PongComplex";
 	public static int GAME_WIDTH = 1920;
 	public static int GAME_HEIGHT = 1080;
 	public static int PPM = 2;
