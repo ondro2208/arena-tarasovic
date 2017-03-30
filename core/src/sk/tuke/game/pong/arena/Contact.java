@@ -7,4 +7,6 @@ import sk.tuke.game.pong.arena.actors.PlayerActor;
  */
 public interface Contact {
 	void contact(PlayerActor player);
+
+	void endGame();
 }

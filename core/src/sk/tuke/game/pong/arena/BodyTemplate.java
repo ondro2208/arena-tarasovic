@@ -34,4 +34,8 @@ public abstract class BodyTemplate extends Actor {
 
 	protected abstract FixtureDef getFixtureDef();
 
+	public Body getPhysicsBody() {
+		return this.physicsBody;
+	}
+
 }

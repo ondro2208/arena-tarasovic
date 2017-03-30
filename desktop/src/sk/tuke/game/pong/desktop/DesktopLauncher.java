@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		config.title = GameInfo.GAME_NAME;
 		config.width = GameInfo.GAME_WIDTH;
 		config.height = GameInfo.GAME_HEIGHT;
+		config.forceExit = false;
 		new LwjglApplication(new PongGame(), config);
 	}
 }

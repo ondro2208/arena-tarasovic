@@ -2,10 +2,7 @@ package sk.tuke.game.pong.arena;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 
 /**
  * Created by otara on 14.3.2017.
@@ -29,7 +26,10 @@ public abstract class JsonBodyTemplate extends BodyTemplate {
 		loader.attachFixture(physicsBody, name, fd, (width * size) / GameInfo.PPM);
 		bodyVector = loader.getOrigin(name, (width * size) / GameInfo.PPM).cpy();
 
-		physicsBody.createFixture(fd).setUserData(this);
+		Fixture fixture = physicsBody.createFixture(fd);//.setUserData(this);
+		fd.shape.dispose();
+		fixture.setUserData(this);
+
 		return physicsBody;
 	}
 

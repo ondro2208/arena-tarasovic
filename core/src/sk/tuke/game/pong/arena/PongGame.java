@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -101,12 +102,27 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		if (student.turnBack(players.get(0), convertListToEnemy())) {
 			turnBack();
 		}
+		for (Actor actor : gameStage.getActors()) {
+			boolean isPlayer = actor instanceof PlayerActor;
+			if (actor instanceof EnemyActor || isPlayer) {
+				float x = ((BodyTemplate) actor).getPhysicsBody().getPosition().x * GameInfo.PPM;
+				float y = ((BodyTemplate) actor).getPhysicsBody().getPosition().y * GameInfo.PPM;
+				if (x < 0 || x > GameInfo.GAME_WIDTH && y < 0 || y > GameInfo.GAME_HEIGHT) {
+					world.destroyBody(((BodyTemplate) actor).getPhysicsBody());
+					actor.remove();
+					if (isPlayer) {
+						endGame();
+					}
+				}
+			}
+		}
 		if (points.size() > 0) {
 			for (int i = 0; i < points.size(); i++) {
 				Vector2 pointPosition = new Vector2(points.get(i).getPointX(), points.get(i).getPointY());
 				for (int j = 0; j < points.size(); j++) {
 					Vector2 playerPosition = new Vector2(players.get(i).getPlayerX(), players.get(i).getPlayerY());
 					if (pointPosition.dst(playerPosition) < 50) {
+						world.destroyBody(points.get(i).getPhysicsBody());
 						points.get(i).remove();
 						points.remove(points.get(i));
 						updateScore();
@@ -406,5 +422,10 @@ public class PongGame extends ApplicationAdapter implements Contact {
 			setTarget(player, allowedDir.get(0));
 			player.setDirection(allowedDir.get(0));
 		}
+	}
+
+	@Override
+	public void endGame() {
+		Gdx.app.exit();
 	}
 }

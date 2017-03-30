@@ -159,16 +159,16 @@ public class Player implements PlayerActions {
 		float playerX = actor.getPlayerX();
 		float playerY = actor.getPlayerY();
 		Direction playerDirection = actor.getDirection();
-		if (Direction.UP_LEFT == playerDirection && (enemyX - playerX < 100) && enemyY > playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+		if (Direction.UP_LEFT == playerDirection && (enemyX - playerX < 150) && enemyY > playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
 			return true;
 		}
-		if (Direction.UP_RIGHT == playerDirection && (playerX - enemyX < 100) && enemyY > playerY && EnemyActor.StartSide.RIGHT == enemyDirection) {
+		if (Direction.UP_RIGHT == playerDirection && (playerX - enemyX < 150) && enemyY > playerY && EnemyActor.StartSide.RIGHT == enemyDirection) {
 			return true;
 		}
-		if (Direction.DOWN_LEFT == playerDirection && (enemyX - playerX < 100) && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+		if (Direction.DOWN_LEFT == playerDirection && (enemyX - playerX < 150) && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
 			return true;
 		}
-		if (Direction.DOWN_RIGHT == playerDirection && (playerX - enemyX < 100) && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+		if (Direction.DOWN_RIGHT == playerDirection && (playerX - enemyX < 150) && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
 			return true;
 		}
 		return false;
