@@ -21,7 +21,7 @@ public class EnemyActor extends JsonBodyTemplate implements Enemy {
 
 	private final int ENEMY_WIDTH = 50;
 	private final int ENEMY_HEIGHT = 30;
-	StartSide position;
+	StartSide startPosition;
 
 	public EnemyActor() {
 		image = new Texture(Gdx.files.internal("enemy.jpg"));
@@ -31,10 +31,10 @@ public class EnemyActor extends JsonBodyTemplate implements Enemy {
 		width = ENEMY_WIDTH;
 		size = generateSize();
 		if (generateSize() == 1) {
-			position = StartSide.LEFT;
+			startPosition = StartSide.LEFT;
 			setPosition(generateX(1), generateY());
 		} else {
-			position = StartSide.RIGHT;
+			startPosition = StartSide.RIGHT;
 			setPosition(generateX(2), generateY());
 		}
 	}
@@ -124,5 +124,12 @@ public class EnemyActor extends JsonBodyTemplate implements Enemy {
 	@Override
 	public float getEnemyY() {
 		return physicsBody.getPosition().y * GameInfo.PPM;
+	}
+
+	@Override
+	public StartSide getEnemyDirection() {
+		if (StartSide.LEFT == startPosition) {
+			return StartSide.RIGHT;
+		} else return StartSide.LEFT;
 	}
 }

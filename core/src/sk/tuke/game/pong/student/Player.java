@@ -3,6 +3,7 @@ package sk.tuke.game.pong.student;
 import com.badlogic.gdx.math.Vector2;
 import sk.tuke.game.pong.arena.Direction;
 import sk.tuke.game.pong.arena.GameInfo;
+import sk.tuke.game.pong.arena.actors.EnemyActor;
 import sk.tuke.game.pong.interfaces.Enemy;
 import sk.tuke.game.pong.interfaces.PlayerActions;
 import sk.tuke.game.pong.interfaces.Point;
@@ -106,10 +107,72 @@ public class Player implements PlayerActions {
 			hmap.put(distance, enemy);
 		}
 		Map<Float, Enemy> map = new TreeMap<Float, Enemy>(hmap);
-		Map.Entry<Float, Enemy> entry;
 		if (map.size() > 0) {
-			entry = map.entrySet().iterator().next();
-			return entry.getKey() < 200;
-		} else return false;
+			Map.Entry<Float, Enemy> entry = map.entrySet().iterator().next();
+			if (entry.getKey() < 200) {
+				if (entry.getKey() < 100)
+					return needChangeNearEnemy(entry.getValue(), actor);
+				return needChange(entry.getValue(), actor);
+			} else return false;
+		}
+		return false;
 	}
+
+	private boolean needChange(Enemy enemy, sk.tuke.game.pong.interfaces.Player actor) {
+		float enemyX = enemy.getEnemyX();
+		float enemyY = enemy.getEnemyY();
+		EnemyActor.StartSide enemyDirection = enemy.getEnemyDirection();
+		float playerX = actor.getPlayerX();
+		float playerY = actor.getPlayerY();
+		Direction playerDirection = actor.getDirection();
+		if (Direction.UP_LEFT == playerDirection && enemyX < playerX && enemyY > playerY && EnemyActor.StartSide.RIGHT == enemyDirection) {
+			return true;
+		}
+		if (Direction.UP_RIGHT == playerDirection && enemyX > playerX && enemyY > playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			return true;
+		}
+		if (Direction.DOWN_LEFT == playerDirection && enemyX < playerX && enemyY < playerY && EnemyActor.StartSide.RIGHT == enemyDirection) {
+			return true;
+		}
+		if (Direction.DOWN_RIGHT == playerDirection && enemyX > playerX && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			return true;
+		}
+		if (Direction.UP == playerDirection && enemyY > playerY) {
+			if (enemyX < playerX && EnemyActor.StartSide.RIGHT == enemyDirection)
+				return true;
+			if (enemyX > playerX && EnemyActor.StartSide.LEFT == enemyDirection)
+				return true;
+		}
+		if (Direction.DOWN == playerDirection && enemyY < playerY) {
+			if (enemyX < playerX && EnemyActor.StartSide.RIGHT == enemyDirection)
+				return true;
+			if (enemyX > playerX && EnemyActor.StartSide.LEFT == enemyDirection)
+				return true;
+		}
+		return false;
+	}
+
+	private boolean needChangeNearEnemy(Enemy enemy, sk.tuke.game.pong.interfaces.Player actor) {
+		float enemyX = enemy.getEnemyX();
+		float enemyY = enemy.getEnemyY();
+		EnemyActor.StartSide enemyDirection = enemy.getEnemyDirection();
+		float playerX = actor.getPlayerX();
+		float playerY = actor.getPlayerY();
+		Direction playerDirection = actor.getDirection();
+		if (Direction.UP_LEFT == playerDirection && (enemyX - playerX < 100) && enemyY > playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			return true;
+		}
+		if (Direction.UP_RIGHT == playerDirection && (playerX - enemyX < 100) && enemyY > playerY && EnemyActor.StartSide.RIGHT == enemyDirection) {
+			return true;
+		}
+		if (Direction.DOWN_LEFT == playerDirection && (enemyX - playerX < 100) && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			return true;
+		}
+		if (Direction.DOWN_RIGHT == playerDirection && (playerX - enemyX < 100) && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			return true;
+		}
+		return false;
+	}
+
+
 }

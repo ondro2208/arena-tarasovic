@@ -40,7 +40,6 @@ public class PongGame extends ApplicationAdapter implements Contact {
 	private int score = 0;
 
 	private int generateEnemy;
-	private int turnBack;
 
 	public static float[][] positions = new float[][]{
 			{GameInfo.GAME_WIDTH / 4, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4)},
@@ -95,14 +94,12 @@ public class PongGame extends ApplicationAdapter implements Contact {
 
 	private void update() {
 		generateEnemy++;
-		turnBack++;
 		if (generateEnemy % 200 == 0) {
 			generateEnemies();
 			generateEnemy = 0;
 		}
-		if (student.turnBack(players.get(0), convertListToEnemy()) && turnBack % 100 == 0) {
+		if (student.turnBack(players.get(0), convertListToEnemy())) {
 			turnBack();
-			turnBack = 0;
 		}
 		if (points.size() > 0) {
 			for (int i = 0; i < points.size(); i++) {
