@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import kpi.openlab.arena.impl.BotResultImpl;
 import kpi.openlab.arena.interfaces.Bot;
@@ -40,12 +41,16 @@ public class PongGame extends ApplicationAdapter implements Contact {
 	private World world;
 	private PlayerActions student;
 	private Bot<PlayerActions> student1;
+	private int generateEnemyDelay = 200;
 
 	private Texture backgroundImage;
 	private Label scoreText;
 	private int score = 0;
 
 	private int generateEnemy;
+
+	private boolean isGameOver = false;
+	private long endStart;
 
 	public static float[][] positions = new float[][]{
 			{GameInfo.GAME_WIDTH / 4, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4)},
@@ -93,11 +98,18 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		update();
 		gameStage.getBatch().begin();
 		gameStage.getBatch().draw(backgroundImage, 0, 0, GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
+		if (isGameOver) {
+			scoreText.draw(gameStage.getBatch(), 0);
+			if (TimeUtils.millis() > (4500 + endStart)) {
+				Gdx.app.exit();
+			}
+		}
 		gameStage.getBatch().end();
 		gameStage.draw();
 		debugRenderer.render(world, camera.combined);
 		world.step(1 / 60f, 6, 2);/*Gdx.graphics.getDeltaTime()*/
 	}
+
 
 	@Override
 	public void dispose() {
@@ -107,7 +119,7 @@ public class PongGame extends ApplicationAdapter implements Contact {
 
 	private void update() {
 		generateEnemy++;
-		if (generateEnemy % 200 == 0) {
+		if (generateEnemy % generateEnemyDelay == 0) {
 			generateEnemies();
 			generateEnemy = 0;
 		}
@@ -282,8 +294,8 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		textStyle.font = font;
 
 		scoreText = new Label(GameInfo.SCORE_TEXT + score, textStyle);
-		scoreText.setBounds(Gdx.graphics.getWidth() - 100, Gdx.graphics.getHeight() - 80, 90, 70);
-		scoreText.setFontScale(1f, 1f);
+		scoreText.setBounds(Gdx.graphics.getWidth() - 150, Gdx.graphics.getHeight() - 80, 90, 70);
+		scoreText.setFontScale(1.5f, 1.5f);
 		return scoreText;
 	}
 
@@ -445,6 +457,28 @@ public class PongGame extends ApplicationAdapter implements Contact {
 
 	@Override
 	public void endGame() {
-		Gdx.app.exit();
+		isGameOver = true;
+		generateEnemyDelay = 5000;
+		endStart = TimeUtils.millis();
+		gameOverPrepare();
+		gameOverScore();
+		gameStage.addActor(scoreText);
+	}
+
+	private void gameOverPrepare() {
+		gameStage.getActors().clear();
+	}
+
+	private void gameOverScore() {
+		Label.LabelStyle textStyle;
+		BitmapFont font = new BitmapFont();
+
+		textStyle = new Label.LabelStyle();
+		textStyle.font = font;
+
+		scoreText = new Label(GameInfo.SCORE_TEXT + score, textStyle);
+		scoreText.setBounds(Gdx.graphics.getWidth() / 2 - 100, Gdx.graphics.getHeight() / 2 - 75, 200, 150);
+		scoreText.setText(student1.getName() + "     " + GameInfo.SCORE_TEXT + score);
+		scoreText.setFontScale(2f, 2f);
 	}
 }

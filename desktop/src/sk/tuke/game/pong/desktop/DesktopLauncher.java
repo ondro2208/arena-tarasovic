@@ -16,7 +16,7 @@ public class DesktopLauncher {
 		config.height = GameInfo.GAME_HEIGHT;
 		config.forceExit = false;
 
-		BotImpl<PlayerActions> player1 = new BotImpl<>(1,"StudentPlayer 1", new StudentPlayer());
+		BotImpl<PlayerActions> player1 = new BotImpl<>(1, "StudentName", new StudentPlayer());
 		new LwjglApplication(new PongGame(player1), config);
 	}
 }
