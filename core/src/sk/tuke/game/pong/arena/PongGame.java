@@ -14,15 +14,19 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import kpi.openlab.arena.impl.BotResultImpl;
+import kpi.openlab.arena.interfaces.Bot;
+import kpi.openlab.arena.interfaces.BotResult;
 import sk.tuke.game.pong.arena.actors.EnemyActor;
 import sk.tuke.game.pong.arena.actors.PlayerActor;
 import sk.tuke.game.pong.arena.actors.PointActor;
 import sk.tuke.game.pong.arena.actors.TrampolineActor;
 import sk.tuke.game.pong.interfaces.Enemy;
-import sk.tuke.game.pong.student.Player;
+import sk.tuke.game.pong.interfaces.PlayerActions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PongGame extends ApplicationAdapter implements Contact {
 
@@ -34,7 +38,8 @@ public class PongGame extends ApplicationAdapter implements Contact {
 	private ArrayList<PlayerActor> players;
 	private ArrayList<EnemyActor> enemies;
 	private World world;
-	private Player student;
+	private PlayerActions student;
+	private Bot<PlayerActions> student1;
 
 	private Texture backgroundImage;
 	private Label scoreText;
@@ -51,6 +56,13 @@ public class PongGame extends ApplicationAdapter implements Contact {
 			{GameInfo.GAME_WIDTH - (GameInfo.GAME_WIDTH / 4), GameInfo.GAME_HEIGHT / 4}
 	};
 
+	public PongGame(Bot<PlayerActions> player1) {
+		super();
+		Objects.requireNonNull(player1,"StudentPlayer 1 must not be null");
+		student1 = player1;
+		student = player1.getBotInstance();
+	}
+
 	@Override
 	public void create() {
 		camera = new OrthographicCamera();
@@ -59,7 +71,7 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		world = new World(new Vector2(0, 0), true);
 		backgroundImage = new Texture(Gdx.files.internal("bg.png"));
 		gameStage = new Stage(new ScreenViewport());
-		student = new Player();
+		//student = new StudentPlayer();
 		enemies = new ArrayList<EnemyActor>();
 
 		playerInitialize();
@@ -280,6 +292,13 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		scoreText.setText(GameInfo.SCORE_TEXT + score);
 	}
 
+	public List<BotResult> getResults() {
+		List<BotResult> results = new ArrayList<BotResult>(2);
+		results.add(new BotResultImpl(student1.getId(),score));
+		//results.add(new BotResultImpl(player2.getId(),gameState.getScore(1)));
+		return results;
+	}
+
 	private ArrayList<Enemy> convertListToEnemy() {
 		ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 		for (EnemyActor enemy : this.enemies) {
@@ -418,7 +437,7 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		if (allowedDir.contains(newDirection)) {
 			setTarget(player, newDirection);
 			player.setDirection(newDirection);
-		} else {
+		}else {
 			setTarget(player, allowedDir.get(0));
 			player.setDirection(allowedDir.get(0));
 		}

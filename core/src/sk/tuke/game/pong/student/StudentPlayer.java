@@ -6,6 +6,7 @@ import sk.tuke.game.pong.arena.GameInfo;
 import sk.tuke.game.pong.arena.actors.EnemyActor;
 import sk.tuke.game.pong.interfaces.Enemy;
 import sk.tuke.game.pong.interfaces.PlayerActions;
+import sk.tuke.game.pong.interfaces.PlayerInfo;
 import sk.tuke.game.pong.interfaces.Point;
 
 import java.util.ArrayList;
@@ -16,14 +17,14 @@ import java.util.TreeMap;
 /**
  * Created by otara on 24.2.2017.
  */
-public class Player implements PlayerActions {
+public class StudentPlayer implements PlayerActions {
 
 	private final int columnDistance = GameInfo.GAME_WIDTH / 4;
 
 	@Override
-	public Direction getNextDirection(Point point, sk.tuke.game.pong.interfaces.Player player) {
-		float playerX = player.getPlayerX();
-		float playerY = player.getPlayerY();
+	public Direction getNextDirection(Point point, PlayerInfo playerInfo) {
+		float playerX = playerInfo.getPlayerX();
+		float playerY = playerInfo.getPlayerY();
 		float pointX = point.getPointX();
 		float pointY = point.getPointY();
 		Direction nextDirection = Direction.UP;
@@ -96,7 +97,7 @@ public class Player implements PlayerActions {
 	}
 
 	@Override
-	public boolean turnBack(sk.tuke.game.pong.interfaces.Player actor, ArrayList<Enemy> enemies) {
+	public boolean turnBack(PlayerInfo actor, ArrayList<Enemy> enemies) {
 		HashMap<Float, Enemy> hmap = new HashMap<Float, Enemy>();
 		float playerX = actor.getPlayerX();
 		float playerY = actor.getPlayerY();
@@ -118,7 +119,7 @@ public class Player implements PlayerActions {
 		return false;
 	}
 
-	private boolean needChange(Enemy enemy, sk.tuke.game.pong.interfaces.Player actor) {
+	private boolean needChange(Enemy enemy, PlayerInfo actor) {
 		float enemyX = enemy.getEnemyX();
 		float enemyY = enemy.getEnemyY();
 		EnemyActor.StartSide enemyDirection = enemy.getEnemyDirection();
@@ -152,7 +153,7 @@ public class Player implements PlayerActions {
 		return false;
 	}
 
-	private boolean needChangeNearEnemy(Enemy enemy, sk.tuke.game.pong.interfaces.Player actor) {
+	private boolean needChangeNearEnemy(Enemy enemy, PlayerInfo actor) {
 		float enemyX = enemy.getEnemyX();
 		float enemyY = enemy.getEnemyY();
 		EnemyActor.StartSide enemyDirection = enemy.getEnemyDirection();

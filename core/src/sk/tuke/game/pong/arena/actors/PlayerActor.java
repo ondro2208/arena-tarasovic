@@ -12,12 +12,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import sk.tuke.game.pong.arena.BodyTemplate;
 import sk.tuke.game.pong.arena.Direction;
 import sk.tuke.game.pong.arena.GameInfo;
-import sk.tuke.game.pong.interfaces.Player;
+import sk.tuke.game.pong.interfaces.PlayerInfo;
 
 /**
  * Created by otara on 22.1.2017.
  */
-public class PlayerActor extends BodyTemplate implements Player {
+public class PlayerActor extends BodyTemplate implements PlayerInfo {
 
 	private static final int RADIUS = 40;
 	private static final int PLAYER_SIZE = 80;

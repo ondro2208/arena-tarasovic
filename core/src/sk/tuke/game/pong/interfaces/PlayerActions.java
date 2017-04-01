@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by otara on 24.2.2017.
  */
 public interface PlayerActions {
-	Direction getNextDirection(Point point, Player actor);
+	Direction getNextDirection(Point point, PlayerInfo actor);
 
-	boolean turnBack(Player actor, ArrayList<Enemy> enemies);
+	boolean turnBack(PlayerInfo actor, ArrayList<Enemy> enemies);
 }

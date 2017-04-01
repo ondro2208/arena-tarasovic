@@ -5,7 +5,7 @@ import sk.tuke.game.pong.arena.Direction;
 /**
  * Created by otara on 3.3.2017.
  */
-public interface Player {
+public interface PlayerInfo {
 	float getPlayerX();
 
 	float getPlayerY();

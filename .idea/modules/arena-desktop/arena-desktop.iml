@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":arena-desktop" external.linked.project.path="$MODULE_DIR$/../../../arena-desktop" external.root.project.path="$MODULE_DIR$/../../.." external.system.id="GRADLE" external.system.module.group="arena-tarasovic" external.system.module.version="1.0" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../arena-desktop">
+      <excludeFolder url="file://$MODULE_DIR$/../../../arena-desktop/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../arena-desktop/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
