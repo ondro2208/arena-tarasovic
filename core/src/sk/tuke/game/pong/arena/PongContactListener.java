@@ -19,7 +19,14 @@ public class PongContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-
+		Fixture A = contact.getFixtureA();
+		Fixture B = contact.getFixtureB();
+		if ((isTrampoline(A) && isPlayer(B))) {
+			this.contact.contact((PlayerActor) B.getUserData());
+		}
+		if (isPlayer(A) && isEnemy(B) || isPlayer(B) && isEnemy(A)) {
+			this.contact.endGame();
+		}
 	}
 
 	private boolean isEnemy(Fixture fixture) {
@@ -43,22 +50,17 @@ public class PongContactListener implements ContactListener {
 	private boolean isTrampoline(Fixture fixture) {
 		for (Fixture fix : fixture.getBody().getFixtureList()) {
 			if (fix.getUserData() instanceof TrampolineActor && secondTrampolineFixture) {
+				secondTrampolineFixture = false;
 				return true;
 			}
 		}
+		secondTrampolineFixture = true;
 		return false;
 	}
 
 	@Override
 	public void endContact(Contact contact) {
-		Fixture A = contact.getFixtureA();
-		Fixture B = contact.getFixtureB();
-		if (isTrampoline(A) && isPlayer(B)) {
-			this.contact.contact((PlayerActor) B.getUserData());
-		}
-		if (isPlayer(A) && isEnemy(B) || isPlayer(B) && isEnemy(A)) {
-			this.contact.endGame();
-		}
+
 	}
 
 	@Override

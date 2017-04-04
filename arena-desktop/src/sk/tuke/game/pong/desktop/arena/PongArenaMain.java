@@ -1,11 +1,12 @@
 package sk.tuke.game.pong.desktop.arena;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import kpi.openlab.arena.gdx.ArenaLwjglApplication;
 import kpi.openlab.arena.interfaces.Bot;
 import kpi.openlab.arena.interfaces.BotResult;
+import sk.tuke.game.pong.arena.GameInfo;
 import sk.tuke.game.pong.arena.PongGame;
 import sk.tuke.game.pong.interfaces.PlayerActions;
-
 
 import java.util.List;
 
@@ -36,12 +37,13 @@ public class PongArenaMain extends ArenaLwjglApplication<PongGame,PlayerActions>
         return PlayerActions.class;
     }
 
-//    @Override
-//    protected LwjglApplicationConfiguration getLwjglConfiguration() {
-//        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-//        config.title = "Pong";
-//        config.width = Pong.WIDTH;
-//        config.height = Pong.HEIGHT;
-//        return config;
-//    }
+    @Override
+    protected LwjglApplicationConfiguration getLwjglConfiguration() {
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.title = GameInfo.GAME_NAME;
+        config.width = GameInfo.GAME_WIDTH;
+        config.height = GameInfo.GAME_HEIGHT;
+        config.forceExit = false;
+        return config;
+    }
 }

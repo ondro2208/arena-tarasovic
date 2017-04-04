@@ -106,7 +106,7 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		}
 		gameStage.getBatch().end();
 		gameStage.draw();
-		debugRenderer.render(world, camera.combined);
+		//debugRenderer.render(world, camera.combined);
 		world.step(1 / 60f, 6, 2);/*Gdx.graphics.getDeltaTime()*/
 	}
 
@@ -158,6 +158,9 @@ public class PongGame extends ApplicationAdapter implements Contact {
 					}
 				}
 			}
+		}
+		if (isGameOver) {
+
 		}
 	}
 
@@ -460,13 +463,13 @@ public class PongGame extends ApplicationAdapter implements Contact {
 		isGameOver = true;
 		generateEnemyDelay = 5000;
 		endStart = TimeUtils.millis();
-		gameOverPrepare();
+		for (PlayerActor playerActor : players) {
+			playerActor.getPhysicsBody().setLinearVelocity(0f, 0f);
+			playerActor.getPhysicsBody().setAngularVelocity(0f);
+		}
+		gameStage.getActors().clear();
 		gameOverScore();
 		gameStage.addActor(scoreText);
-	}
-
-	private void gameOverPrepare() {
-		gameStage.getActors().clear();
 	}
 
 	private void gameOverScore() {
