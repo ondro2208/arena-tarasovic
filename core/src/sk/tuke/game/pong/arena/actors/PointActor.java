@@ -19,9 +19,9 @@ import java.util.Random;
  */
 public class PointActor extends BodyTemplate implements Point {
 
-	private final int POINT_SIZE = 20;
-	private static final int POINT_OFFSET = 20;
-	private final int RADIUS = 10;
+	private final int POINT_SIZE = GameInfo.GAME_WIDTH / 125;
+	private static final int POINT_OFFSET = GameInfo.GAME_WIDTH / 125;
+	private final int RADIUS = (GameInfo.GAME_WIDTH / 125) / 2;
 
 	public static float[][] pointsPositions = new float[][]{
 			{GameInfo.GAME_WIDTH / 4, GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4) - POINT_OFFSET},
@@ -31,13 +31,6 @@ public class PointActor extends BodyTemplate implements Point {
 			{GameInfo.GAME_WIDTH / 2, GameInfo.GAME_HEIGHT / 4 + POINT_OFFSET},
 			{GameInfo.GAME_WIDTH - (GameInfo.GAME_WIDTH / 4), GameInfo.GAME_HEIGHT / 4 + POINT_OFFSET}
 	};
-
-	public PointActor(float x, float y) {
-		image = new Texture(Gdx.files.internal("point.jpg"));
-		sprite = new Sprite(image);
-		setPosition(x, y);
-		sprite.setSize(POINT_SIZE, POINT_SIZE);
-	}
 
 	public PointActor(Vector2 vector) {
 		image = new Texture(Gdx.files.internal("point.jpg"));
@@ -49,7 +42,7 @@ public class PointActor extends BodyTemplate implements Point {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		sprite.setPosition(physicsBody.getPosition().x * GameInfo.PPM - sprite.getWidth() / 2, physicsBody.getPosition().y * GameInfo.PPM - sprite.getHeight() / 2);
+		sprite.setPosition(physicsBody.getPosition().x - sprite.getWidth() / 2, physicsBody.getPosition().y - sprite.getHeight() / 2);
 		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		sprite.draw(batch);
 	}
@@ -65,7 +58,7 @@ public class PointActor extends BodyTemplate implements Point {
 	@Override
 	protected FixtureDef getFixtureDef() {
 		CircleShape shape = new CircleShape();
-		shape.setRadius(RADIUS / GameInfo.PPM);
+		shape.setRadius(RADIUS /*/ GameInfo.PPM*/);
 
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
@@ -74,23 +67,6 @@ public class PointActor extends BodyTemplate implements Point {
 		fixtureDef.filter.groupIndex = 0;
 		return fixtureDef;
 	}
-
-	/*private PointActor generateNewPoint(float oldX, float oldY) {
-		int n, x, y;
-		n = generateRandomPosition();
-		x = pointsPositions[n][0];
-		y = pointsPositions[n][1];
-
-		while (oldX == x && oldY == y) {
-			n = generateRandomPosition();
-			x = pointsPositions[n][0];
-			y = pointsPositions[n][1];
-		}
-
-		PointActor point = new PointActor(x,y);
-		return point;
-	}*/
-
 	private int generateNewPointPosition(float oldX, float oldY) {
 		int n;
 		float x, y;

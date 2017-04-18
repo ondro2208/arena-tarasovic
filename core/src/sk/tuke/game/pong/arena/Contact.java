@@ -1,5 +1,6 @@
 package sk.tuke.game.pong.arena;
 
+import sk.tuke.game.pong.arena.actors.EnemyActor;
 import sk.tuke.game.pong.arena.actors.PlayerActor;
 
 /**
@@ -8,5 +9,5 @@ import sk.tuke.game.pong.arena.actors.PlayerActor;
 public interface Contact {
 	void contact(PlayerActor player);
 
-	void endGame();
+	void playerToRemove(PlayerActor playerActor, EnemyActor enemyActor);
 }

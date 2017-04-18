@@ -2,6 +2,8 @@ package sk.tuke.game.pong.desktop.arena;
 
 import kpi.openlab.arena.StartArena;
 import sk.tuke.game.pong.student.StudentPlayer;
+import sk.tuke.game.pong.student.StudentPlayer1;
+import sk.tuke.game.pong.student.StudentPlayer2;
 
 /**
  * Created by otara on 1.4.2017.
@@ -14,6 +16,6 @@ public class DesktopArenaManualRunner {
 		//PongGame game = new PongGame(player1);
 		//PongArenaMain arena = new PongArenaMain();
 		//startArena.start(arena, playerActions);
-		startArena.start(PongArenaMain.class, StudentPlayer.class);
+		startArena.start(PongArenaMain.class, StudentPlayer.class, StudentPlayer1.class, StudentPlayer2.class);
 	}
 }

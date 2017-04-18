@@ -15,80 +15,66 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Created by otara on 24.2.2017.
+ * Created by otara on 14.4.2017.
  */
-public class StudentPlayer implements PlayerActions {
+public class StudentPlayer1 implements PlayerActions {
 
 	private final int columnDistance = GameInfo.GAME_WIDTH / 4;
+	private int countOfBounce = 0;
+	private Direction[] flow = new Direction[]{
+			Direction.DOWN_LEFT,
+			Direction.UP,
+			Direction.DOWN_RIGHT,
+			Direction.UP,
+			Direction.DOWN_RIGHT,
+			Direction.UP,
+			Direction.DOWN_LEFT,
+			Direction.UP
+	};
 
 	@Override
 	public Direction getNextDirection(Point point, PlayerInfo playerInfo) {
-		float playerX = playerInfo.getPlayerX();
-		float playerY = playerInfo.getPlayerY();
-		float pointX = point.getPointX();
-		float pointY = point.getPointY();
-		Direction nextDirection = Direction.UP;
-
-		float offset = 50;
-
-		if (isUp(pointY)) {
-			if (playerX - offset < pointX && playerX + offset > pointX) {
-				nextDirection = Direction.UP;
+		Direction nextDirection;
+		if (countOfBounce > 7)
+			countOfBounce = 0;
+		switch (countOfBounce) {
+			case 0: {
+				nextDirection = flow[0];
+				break;
 			}
-			if (playerX - offset - columnDistance < pointX && playerX + offset - columnDistance > pointX) {
-				if (playerY + offset > pointY && playerY - offset < pointY)
-					nextDirection = Direction.DOWN_LEFT;
-				else
-					nextDirection = Direction.UP_LEFT;
+			case 1: {
+				nextDirection = flow[1];
+				break;
 			}
-			if (playerX - offset + columnDistance < pointX && playerX + offset + columnDistance > pointX) {
-				if (playerY + offset > pointY && playerY - offset < pointY)
-					nextDirection = Direction.DOWN_RIGHT;
-				else
-					nextDirection = Direction.UP_RIGHT;
+			case 2: {
+				nextDirection = flow[2];
+				break;
 			}
-			if (playerX - offset - 2 * columnDistance < pointX && playerX + offset - 2 * columnDistance > pointX) {
-				if (playerY + offset > pointY && playerY - offset < pointY)
-					nextDirection = Direction.DOWN_LEFT;
-				else
-					nextDirection = Direction.UP_LEFT;
+			case 3: {
+				nextDirection = flow[3];
+				break;
 			}
-			if (playerX - offset + 2 * columnDistance < pointX && playerX + offset + 2 * columnDistance > pointX) {
-				if (playerY + offset > pointY && playerY - offset < pointY)
-					nextDirection = Direction.DOWN_RIGHT;
-				else
-					nextDirection = Direction.UP_RIGHT;
+			case 4: {
+				nextDirection = flow[4];
+				break;
 			}
-		} else {
-			if (playerX - offset < pointX && playerX + offset > pointX) {
-				nextDirection = Direction.DOWN;
+			case 5: {
+				nextDirection = flow[5];
+				break;
 			}
-			if (playerX - offset - columnDistance < pointX && playerX + offset - columnDistance > pointX) {
-				if (playerY + offset > pointY && playerY - offset < pointY)
-					nextDirection = Direction.UP_LEFT;
-				else
-					nextDirection = Direction.DOWN_LEFT;
+			case 6: {
+				nextDirection = flow[6];
+				break;
 			}
-			if (playerX - offset + columnDistance < pointX && playerX + offset + columnDistance > pointX) {
-				if (playerY + offset > pointY && playerY - offset < pointY)
-					nextDirection = Direction.UP_RIGHT;
-				else
-					nextDirection = Direction.DOWN_RIGHT;
+			case 7: {
+				nextDirection = flow[7];
+				break;
 			}
-			if (playerX - offset - 2 * columnDistance < pointX && playerX + offset - 2 * columnDistance > pointX) {
-				if (playerY + offset > pointY && playerY - offset < pointY)
-					nextDirection = Direction.UP_LEFT;
-				else
-					nextDirection = Direction.DOWN_LEFT;
-			}
-			if (playerX - offset + 2 * columnDistance < pointX && playerX + offset + 2 * columnDistance > pointX) {
-				if (playerY + offset > pointY && playerY - offset < pointY)
-					nextDirection = Direction.UP_RIGHT;
-				else
-					nextDirection = Direction.DOWN_RIGHT;
+			default: {
+				nextDirection = flow[1];
 			}
 		}
-
+		countOfBounce++;
 		return nextDirection;
 	}
 
@@ -110,8 +96,8 @@ public class StudentPlayer implements PlayerActions {
 		Map<Float, Enemy> map = new TreeMap<Float, Enemy>(hmap);
 		if (map.size() > 0) {
 			Map.Entry<Float, Enemy> entry = map.entrySet().iterator().next();
-			if (entry.getKey() < 100) {
-				if (entry.getKey() < 50)
+			if (entry.getKey() < 200) {
+				if (entry.getKey() < 100)
 					return needChangeNearEnemy(entry.getValue(), actor);
 				return needChange(entry.getValue(), actor);
 			} else return false;

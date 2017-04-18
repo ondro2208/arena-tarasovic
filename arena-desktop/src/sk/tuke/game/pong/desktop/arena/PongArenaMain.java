@@ -14,7 +14,7 @@ public class PongArenaMain extends ArenaLwjglApplication<PongGame,PlayerActions>
 
     @Override
     public int getNumberOfRequiredBots() {
-        return 1;
+        return 3;
     }
 
     @Override
@@ -24,7 +24,7 @@ public class PongArenaMain extends ArenaLwjglApplication<PongGame,PlayerActions>
 
     @Override
     protected PongGame arenaStarting(List<Bot<PlayerActions>> bots) {
-        return new PongGame(bots.get(0));
+        return new PongGame(bots);
     }
 
     @Override

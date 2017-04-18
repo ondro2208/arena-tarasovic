@@ -11,21 +11,20 @@ import sk.tuke.game.pong.arena.actors.TrampolineActor;
  */
 public class PongContactListener implements ContactListener {
 	private sk.tuke.game.pong.arena.Contact contact;
-	private boolean secondTrampolineFixture = false;
 
 	public PongContactListener(sk.tuke.game.pong.arena.Contact contact) {
 		this.contact = contact;
 	}
 
-    @Override
-    public void beginContact(Contact contact) {
+	@Override
+	public void beginContact(Contact contact) {
 		Fixture A = contact.getFixtureA();
 		Fixture B = contact.getFixtureB();
-		if ((isTrampoline(A) && isPlayer(B))) {
+		if (isTrampoline(A) && isPlayer(B)) {
 			this.contact.contact((PlayerActor) B.getUserData());
 		}
-		if (isPlayer(A) && isEnemy(B) || isPlayer(B) && isEnemy(A)) {
-			this.contact.endGame();
+		if (isPlayer(A) && isEnemy(B)) {
+			this.contact.playerToRemove((PlayerActor) A.getUserData(), (EnemyActor) B.getUserData());//removePlayer((PlayerActor) A.getUserData());
 		}
 	}
 
@@ -49,12 +48,10 @@ public class PongContactListener implements ContactListener {
 
 	private boolean isTrampoline(Fixture fixture) {
 		for (Fixture fix : fixture.getBody().getFixtureList()) {
-			if (fix.getUserData() instanceof TrampolineActor && secondTrampolineFixture) {
-				secondTrampolineFixture = false;
+			if (fix.getUserData() instanceof TrampolineActor) {
 				return true;
 			}
 		}
-		secondTrampolineFixture = true;
 		return false;
 	}
 
