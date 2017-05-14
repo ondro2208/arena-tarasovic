@@ -16,7 +16,10 @@ import kpi.openlab.arena.impl.BotResultImpl;
 import kpi.openlab.arena.interfaces.Bot;
 import kpi.openlab.arena.interfaces.BotResult;
 import sk.tuke.game.pong.arena.*;
-import sk.tuke.game.pong.arena.actors.*;
+import sk.tuke.game.pong.arena.actors.EnemyActor;
+import sk.tuke.game.pong.arena.actors.PlayerActor;
+import sk.tuke.game.pong.arena.actors.PointActor;
+import sk.tuke.game.pong.arena.actors.TrampolineActor;
 import sk.tuke.game.pong.arena.scenes.PlayHUDScene;
 import sk.tuke.game.pong.interfaces.Enemy;
 import sk.tuke.game.pong.interfaces.PlayerActions;
@@ -27,7 +30,7 @@ import java.util.List;
 /**
  * Created by otara on 10.4.2017.
  */
-public class PlayScreen implements Screen, Contact {
+public class PlayScreen implements Screen {
 
 	private final List<Bot<PlayerActions>> bots;
 	private World world;
@@ -40,7 +43,7 @@ public class PlayScreen implements Screen, Contact {
 	private Texture backgroundImage;
 	private PlayHUDScene hud;
 
-	private ArrayList<ComplexPlayer> complexPlayers;
+	private ArrayList<PlayerActor> players;
 	private List<BotResult> results;
 	private ArrayList<EnemyActor> enemies;
 	private ArrayList<PointActor> points;
@@ -73,7 +76,7 @@ public class PlayScreen implements Screen, Contact {
 		playersInitialize(bots);
 		trampolineInitialize();
 
-		hud = new PlayHUDScene((SpriteBatch) gameStage.getBatch(), complexPlayers);
+		hud = new PlayHUDScene((SpriteBatch) gameStage.getBatch(), players);
 	}
 
 	private void pointInitialize() {
@@ -85,14 +88,14 @@ public class PlayScreen implements Screen, Contact {
 	}
 
 	private void playersInitialize(List<Bot<PlayerActions>> bots) {
-		complexPlayers = new ArrayList<>();
+		players = new ArrayList<>();
 		for (Bot<PlayerActions> bot : bots) {
-			complexPlayers.add(new ComplexPlayer(new PlayerActor((bot.getId() - 1) % 3), bot.getBotInstance(), bot.getName(), bot.getId()));
-			complexPlayers.get(complexPlayers.size() - 1).getActor().createBody(world);
-			gameStage.addActor(complexPlayers.get(complexPlayers.size() - 1).getActor());
+			players.add(new PlayerActor(bot.getId(), bot.getName(), bot.getBotInstance()));
+			players.get(players.size() - 1).createBody(world);
+			gameStage.addActor(players.get(players.size() - 1));
 		}
-		for (ComplexPlayer complexPlayer : complexPlayers) {
-			MoveHelper.setTarget(complexPlayer.getActor(), Direction.UP);
+		for (PlayerActor player : players) {
+			MoveHelper.setTarget(player, Direction.UP);
 		}
 	}
 
@@ -129,14 +132,6 @@ public class PlayScreen implements Screen, Contact {
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			Gdx.app.exit();
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			for (ComplexPlayer complexPlayer : complexPlayers) {
-				MoveHelper.setTarget(complexPlayer.getActor(), Direction.UP);
-			}
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			complexPlayers.get(0).getActor().updateVector(-10, GameInfo.GAME_HEIGHT / 2);
-		}
 		update();
 		gameStage.getBatch().setProjectionMatrix(hud.stage.getCamera().combined);
 		gameStage.getBatch().begin();
@@ -144,23 +139,29 @@ public class PlayScreen implements Screen, Contact {
 		gameStage.getBatch().end();
 		hud.getStage().draw();
 		gameStage.draw();
-		debugRenderer.render(world, gameCam.combined);
+		//debugRenderer.render(world, gameCam.combined);
 	}
 
 	public void update() {
-		for (ComplexPlayer complexPlayer : complexPlayers) {
-			if (complexPlayer.getStudent().turnBack(complexPlayer.getActor(), convertListToEnemy())) {
-				MoveHelper.turnBack(complexPlayer.getActor());
+		for (PlayerActor player : players) {
+			if (player.getStudent().turnBack(player, convertListToEnemy())) {
+				MoveHelper.turnBack(player);
 			}
 		}
-		checkRemovePlayer();
+		checkOutOfField();
 		generateEnemies();
-		removePlayer();
+		removePlayerAndEnemy();
+		collectPoint();
+		world.step(1 / 60f, 6, 2);
+		gameCam.update();
+	}
+
+	private void collectPoint() {
 		if (points.size() > 0) {
 			for (int i = 0; i < points.size(); i++) {
 				Vector2 pointPosition = new Vector2(points.get(i).getPointX(), points.get(i).getPointY());
-				for (ComplexPlayer complexPlayer : complexPlayers) {
-					Vector2 playerPosition = new Vector2(complexPlayer.getActor().getPlayerX(), complexPlayer.getActor().getPlayerY());
+				for (PlayerActor playerActor : players) {
+					Vector2 playerPosition = new Vector2(playerActor.getPlayerX(), playerActor.getPlayerY());
 					if (pointPosition.dst(playerPosition) < 30) {
 						world.destroyBody(points.get(i).getPhysicsBody());
 						points.get(i).remove();
@@ -169,41 +170,47 @@ public class PlayScreen implements Screen, Contact {
 						newPoint.createBody(world);
 						gameStage.addActor(newPoint);
 						this.points.add(0, newPoint);
-						complexPlayer.getActor().incrementScore();
+						checkOtherPlayersPositions(pointPosition);
 						hud.update();
 						return;
 					}
 				}
 			}
 		}
-		world.step(1 / 60f, 6, 2);
-		gameCam.update();
 	}
 
-	private void checkRemovePlayer() {
+	private void checkOtherPlayersPositions(Vector2 pointPosition) {
+		for (PlayerActor playerActor : players) {
+			Vector2 playerPosition = new Vector2(playerActor.getPlayerX(), playerActor.getPlayerY());
+			if (pointPosition.dst(playerPosition) < 30) {
+				playerActor.incrementScore();
+			}
+		}
+	}
+
+	private void checkOutOfField() {
 		int index = -1;
-		for (int i = 0; i < complexPlayers.size(); i++) {
-			ComplexPlayer player = complexPlayers.get(i);
-			float x = player.getActor().getPlayerX();
-			float y = player.getActor().getPlayerY();
-			if (x < 0 || x > GameInfo.GAME_WIDTH && y < 0 || y > GameInfo.GAME_HEIGHT) {
+		for (int i = 0; i < players.size(); i++) {
+			PlayerActor playerActor = players.get(i);
+			float x = playerActor.getPlayerX();
+			float y = playerActor.getPlayerY();
+			if (x < 0 || x > GameInfo.GAME_WIDTH || y < 0 || y > GameInfo.GAME_HEIGHT) {
 				index = i;
-				world.destroyBody(player.getActor().getPhysicsBody());
-				player.getActor().remove();
+				removePlayer(playerActor);
 				break;
 			}
 		}
-		if (index != -1) {
-			complexPlayers.remove(index);
-			hud.update();
-			if (complexPlayers.size() < 1)
-				game.setScreen(new GameOverScreen(game, results, bots));
-		}
+		isLastPlayer(index);
+		index = -1;
 		for (int i = 0; i < enemies.size(); i++) {
-			if (enemyActorToRemove == enemies.get(i)) {
+			EnemyActor enemy = enemies.get(i);
+			float x = enemy.getEnemyX();
+			float y = enemy.getEnemyY();
+			if (x < 0 || x > GameInfo.GAME_WIDTH || y < 0 || y > GameInfo.GAME_HEIGHT) {
 				index = i;
-				world.destroyBody(enemyActorToRemove.getPhysicsBody());
-				enemyActorToRemove.remove();
+				world.destroyBody(enemy.getPhysicsBody());
+				enemy.remove();
+				break;
 			}
 		}
 		if (index != -1) {
@@ -211,33 +218,61 @@ public class PlayScreen implements Screen, Contact {
 		}
 	}
 
-	@Override
-	public void playerToRemove(PlayerActor playerActor, EnemyActor enemyActor) {
-		playerActorToRemove = playerActor;
-		enemyActorToRemove = enemyActor;
-	}
-
-	public void removePlayer() {
+	public void removePlayerAndEnemy() {
 		if (playerActorToRemove == null || enemyActorToRemove == null)
 			return;
 		int index = -1;
-		for (int i = 0; i < complexPlayers.size(); i++) {
-			ComplexPlayer player = complexPlayers.get(i);
-			if (playerActorToRemove == player.getActor()) {
-				results.add(new BotResultImpl(player.getId(), player.getActor().getScore()));
+		for (int i = 0; i < players.size(); i++) {
+			PlayerActor player = players.get(i);
+			if (playerActorToRemove == player) {
 				index = i;
-				player.getActor().remove();
-				world.destroyBody(player.getActor().getPhysicsBody());
+				removePlayer(player);
 				break;
 			}
 		}
-		if (index != -1) {
+
+		if (isLastPlayer(index))
 			playerActorToRemove = null;
-			complexPlayers.remove(index);
-			hud.update();
-			if (complexPlayers.size() < 1)
-				game.setScreen(new GameOverScreen(game, results, bots));
+		index = -1;
+		for (int i = 0; i < enemies.size(); i++) {
+			if (enemyActorToRemove == enemies.get(i)) {
+				index = i;
+				world.destroyBody(enemyActorToRemove.getPhysicsBody());
+				enemyActorToRemove.remove();
+				enemyActorToRemove = null;
+			}
 		}
+		if (index != -1) {
+			enemies.remove(index);
+		}
+	}
+
+	private void removePlayer(PlayerActor player) {
+		results.add(getIndexToResults(player.getScore()), new BotResultImpl(player.getId(), player.getScore()));
+		player.remove();
+		world.destroyBody(player.getPhysicsBody());
+	}
+
+	private int getIndexToResults(int score) {
+		for (int i = 0; i < results.size(); i++) {
+			BotResult result = results.get(i);
+			if (result.getScore() < score) {
+				return i;
+			}
+		}
+		return results.size();
+	}
+
+
+	private boolean isLastPlayer(int index) {
+		if (index != -1) {
+			players.remove(index);
+			hud.update();
+			if (players.size() < 1)
+				game.setScreen(new GameOverScreen(game, results, bots));
+			return true;
+		}
+		return false;
 	}
 
 	private ArrayList<Enemy> convertListToEnemy() {
@@ -248,9 +283,13 @@ public class PlayScreen implements Screen, Contact {
 		return enemies;
 	}
 
-	@Override
-	public void contact(PlayerActor player) {
-		PlayerActions student = getStudentToActor(player);
+	public void actorsToRemove(PlayerActor playerActor, EnemyActor enemyActor) {
+		playerActorToRemove = playerActor;
+		enemyActorToRemove = enemyActor;
+	}
+
+	public void bounce(PlayerActor player) {
+		PlayerActions student = player.getStudent();
 		Direction newDirection = student.getNextDirection(points.get(0), player);
 		List<Direction> allowedDir = MoveHelper.getAllowedNextDirections(player.getDirection());
 		if (allowedDir.contains(newDirection)) {
@@ -260,17 +299,6 @@ public class PlayScreen implements Screen, Contact {
 			MoveHelper.setTarget(player, allowedDir.get(0));
 			player.setDirection(allowedDir.get(0));
 		}
-	}
-
-	private PlayerActions getStudentToActor(PlayerActor player) {
-		PlayerActions student = null;
-		for (ComplexPlayer complexPlayer : complexPlayers) {
-			if (complexPlayer.getActor() == player) {
-				student = complexPlayer.getStudent();
-				break;
-			}
-		}
-		return student;
 	}
 
 	@Override

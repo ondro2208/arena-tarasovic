@@ -1,11 +1,13 @@
 package sk.tuke.game.pong.arena.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -25,17 +27,16 @@ import java.util.List;
 public class GameOverScreen implements Screen {
 
 	private final Texture backgroundImage;
-	private List<BotResult> results;
-	PongGame game;
+	private PongGame game;
 	private OrthographicCamera gameCam;
 	private FitViewport gamePort;
 	private Stage gameStage;
 	private long time;
+	private BitmapFont myFont;
 
 
 	public GameOverScreen(PongGame game, List<BotResult> results, List<Bot<PlayerActions>> bots) {
 		time = System.currentTimeMillis();
-		this.results = results;
 		this.game = game;
 		game.setResults(results);
 		gameCam = new OrthographicCamera();
@@ -43,15 +44,22 @@ public class GameOverScreen implements Screen {
 		backgroundImage = new Texture(Gdx.files.internal("bg.png"));
 		gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
 		gameStage = new Stage();
+
+		generateFont(70);
+		Label gameTitle = new Label("PongComplex", new Label.LabelStyle(myFont, Color.YELLOW));
+		gameTitle.setAlignment(Align.center);
+		gameTitle.setBounds(GameInfo.GAME_WIDTH / 2 - 50, GameInfo.GAME_HEIGHT / 2 + 100, 100, 50);
+		gameStage.addActor(gameTitle);
+
+		generateFont(30);
 		Table table = new Table();
 		table.setFillParent(true);
-		table.add(new Label("PongComplex", new Label.LabelStyle(new BitmapFont(), Color.YELLOW))).expandX().center();
 		table.row();
 		for (BotResult result : results) {
 			for (Bot<PlayerActions> bot : bots) {
 				if (result.getBotId() == bot.getId()) {
-					table.add(new Label(bot.getName(), new Label.LabelStyle(new BitmapFont(), Color.WHITE))).expandX();
-					table.add(new Label(String.format("%03d", result.getScore()), new Label.LabelStyle(new BitmapFont(), Color.WHITE))).expandX();
+					table.add(new Label(bot.getName(), new Label.LabelStyle(myFont, Color.WHITE))).expandX();
+					table.add(new Label(String.format("%03d", result.getScore()), new Label.LabelStyle(myFont, Color.WHITE))).expandX();
 					break;
 				}
 			}
@@ -61,6 +69,14 @@ public class GameOverScreen implements Screen {
 		gameStage.addActor(table);
 	}
 
+	private void generateFont(int size) {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myFont.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = size;
+		myFont = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
+	}
+
 	@Override
 	public void show() {
 
@@ -68,6 +84,9 @@ public class GameOverScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
 		gameStage.getBatch().begin();
 		gameStage.getBatch().draw(backgroundImage, 0, 0, GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);
 		gameStage.getBatch().end();

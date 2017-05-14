@@ -33,7 +33,7 @@ public class StudentPlayer1 implements PlayerActions {
 	};
 
 	@Override
-	public Direction getNextDirection(Point point, PlayerInfo playerInfo) {
+	public Direction getNextDirection(Point point, PlayerInfo player) {
 		Direction nextDirection;
 		if (countOfBounce > 7)
 			countOfBounce = 0;
@@ -83,10 +83,10 @@ public class StudentPlayer1 implements PlayerActions {
 	}
 
 	@Override
-	public boolean turnBack(PlayerInfo actor, ArrayList<Enemy> enemies) {
+	public boolean turnBack(PlayerInfo player, ArrayList<Enemy> enemies) {
 		HashMap<Float, Enemy> hmap = new HashMap<Float, Enemy>();
-		float playerX = actor.getPlayerX();
-		float playerY = actor.getPlayerY();
+		float playerX = player.getPlayerX();
+		float playerY = player.getPlayerY();
 		for (Enemy enemy : enemies) {
 			float enemyX = enemy.getEnemyX();
 			float enemyY = enemy.getEnemyY();
@@ -98,8 +98,8 @@ public class StudentPlayer1 implements PlayerActions {
 			Map.Entry<Float, Enemy> entry = map.entrySet().iterator().next();
 			if (entry.getKey() < 200) {
 				if (entry.getKey() < 100)
-					return needChangeNearEnemy(entry.getValue(), actor);
-				return needChange(entry.getValue(), actor);
+					return needChangeNearEnemy(entry.getValue(), player);
+				return needChange(entry.getValue(), player);
 			} else return false;
 		}
 		return false;
@@ -113,28 +113,40 @@ public class StudentPlayer1 implements PlayerActions {
 		float playerY = actor.getPlayerY();
 		Direction playerDirection = actor.getDirection();
 		if (Direction.UP_LEFT == playerDirection && enemyX < playerX && enemyY > playerY && EnemyActor.StartSide.RIGHT == enemyDirection) {
+			countOfBounce--;
 			return true;
 		}
 		if (Direction.UP_RIGHT == playerDirection && enemyX > playerX && enemyY > playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			countOfBounce--;
 			return true;
 		}
 		if (Direction.DOWN_LEFT == playerDirection && enemyX < playerX && enemyY < playerY && EnemyActor.StartSide.RIGHT == enemyDirection) {
+			countOfBounce--;
 			return true;
 		}
 		if (Direction.DOWN_RIGHT == playerDirection && enemyX > playerX && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			countOfBounce--;
 			return true;
 		}
 		if (Direction.UP == playerDirection && enemyY > playerY) {
-			if (enemyX < playerX && EnemyActor.StartSide.RIGHT == enemyDirection)
+			if (enemyX < playerX && EnemyActor.StartSide.RIGHT == enemyDirection) {
+				countOfBounce--;
 				return true;
-			if (enemyX > playerX && EnemyActor.StartSide.LEFT == enemyDirection)
+			}
+			if (enemyX > playerX && EnemyActor.StartSide.LEFT == enemyDirection) {
+				countOfBounce--;
 				return true;
+			}
 		}
 		if (Direction.DOWN == playerDirection && enemyY < playerY) {
-			if (enemyX < playerX && EnemyActor.StartSide.RIGHT == enemyDirection)
+			if (enemyX < playerX && EnemyActor.StartSide.RIGHT == enemyDirection) {
+				countOfBounce--;
 				return true;
-			if (enemyX > playerX && EnemyActor.StartSide.LEFT == enemyDirection)
+			}
+			if (enemyX > playerX && EnemyActor.StartSide.LEFT == enemyDirection) {
+				countOfBounce--;
 				return true;
+			}
 		}
 		return false;
 	}
@@ -147,15 +159,19 @@ public class StudentPlayer1 implements PlayerActions {
 		float playerY = actor.getPlayerY();
 		Direction playerDirection = actor.getDirection();
 		if (Direction.UP_LEFT == playerDirection && (enemyX - playerX < 150) && enemyY > playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			countOfBounce--;
 			return true;
 		}
 		if (Direction.UP_RIGHT == playerDirection && (playerX - enemyX < 150) && enemyY > playerY && EnemyActor.StartSide.RIGHT == enemyDirection) {
+			countOfBounce--;
 			return true;
 		}
 		if (Direction.DOWN_LEFT == playerDirection && (enemyX - playerX < 150) && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			countOfBounce--;
 			return true;
 		}
 		if (Direction.DOWN_RIGHT == playerDirection && (playerX - enemyX < 150) && enemyY < playerY && EnemyActor.StartSide.LEFT == enemyDirection) {
+			countOfBounce--;
 			return true;
 		}
 		return false;

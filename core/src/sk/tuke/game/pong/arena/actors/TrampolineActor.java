@@ -13,10 +13,10 @@ import sk.tuke.game.pong.arena.GameInfo;
 /**
  * Created by otara on 22.1.2017.
  */
-public class TrampolineActor extends BodyTemplate {//JsonBodyTemplate {
+public class TrampolineActor extends BodyTemplate {
 
 	public TrampolineActor(float x, float y) {
-		image = new Texture(Gdx.files.internal("trampoline.png"));
+		image = new Texture(Gdx.files.internal("trampoline1.png"));
 		sprite = new Sprite(image);
 		setPosition(x, y);
 		sprite.setSize(90, 20);

@@ -20,7 +20,7 @@ import java.util.Random;
 public class PointActor extends BodyTemplate implements Point {
 
 	private final int POINT_SIZE = GameInfo.GAME_WIDTH / 125;
-	private static final int POINT_OFFSET = GameInfo.GAME_WIDTH / 125;
+	private static final int POINT_OFFSET = GameInfo.POINT_OFFSET;//GameInfo.GAME_WIDTH / 125;
 	private final int RADIUS = (GameInfo.GAME_WIDTH / 125) / 2;
 
 	public static float[][] pointsPositions = new float[][]{
@@ -33,7 +33,8 @@ public class PointActor extends BodyTemplate implements Point {
 	};
 
 	public PointActor(Vector2 vector) {
-		image = new Texture(Gdx.files.internal("point.jpg"));
+		//image = new Texture(Gdx.files.internal("point.jpg"));
+		image = new Texture(Gdx.files.internal("point1.png"));
 		sprite = new Sprite(image);
 		int n = generateNewPointPosition(vector.x, vector.y);
 		setPosition(pointsPositions[n][0], pointsPositions[n][1]);

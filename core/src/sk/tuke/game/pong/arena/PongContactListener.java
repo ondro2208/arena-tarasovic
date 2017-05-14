@@ -1,19 +1,19 @@
 package sk.tuke.game.pong.arena;
 
-import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.*;
 import sk.tuke.game.pong.arena.actors.EnemyActor;
 import sk.tuke.game.pong.arena.actors.PlayerActor;
 import sk.tuke.game.pong.arena.actors.TrampolineActor;
+import sk.tuke.game.pong.arena.screens.PlayScreen;
 
 /**
  * Created by DeeL on 09.09.2016.
  */
 public class PongContactListener implements ContactListener {
-	private sk.tuke.game.pong.arena.Contact contact;
+	private PlayScreen game;
 
-	public PongContactListener(sk.tuke.game.pong.arena.Contact contact) {
-		this.contact = contact;
+	public PongContactListener(PlayScreen game) {
+		this.game = game;
 	}
 
 	@Override
@@ -21,10 +21,10 @@ public class PongContactListener implements ContactListener {
 		Fixture A = contact.getFixtureA();
 		Fixture B = contact.getFixtureB();
 		if (isTrampoline(A) && isPlayer(B)) {
-			this.contact.contact((PlayerActor) B.getUserData());
+			this.game.bounce((PlayerActor) B.getUserData());
 		}
 		if (isPlayer(A) && isEnemy(B)) {
-			this.contact.playerToRemove((PlayerActor) A.getUserData(), (EnemyActor) B.getUserData());//removePlayer((PlayerActor) A.getUserData());
+			this.game.actorsToRemove((PlayerActor) A.getUserData(), (EnemyActor) B.getUserData());
 		}
 	}
 

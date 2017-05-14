@@ -1,10 +1,13 @@
 package sk.tuke.game.pong.arena.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
@@ -30,6 +33,7 @@ public class StartScreen implements Screen {
 	private int counter;
 	private long time;
 	private List<Bot<PlayerActions>> playerBots;
+	private BitmapFont font;
 
 	public StartScreen(PongGame game, List<Bot<PlayerActions>> playerBots) {
 		this.playerBots = playerBots;
@@ -42,17 +46,30 @@ public class StartScreen implements Screen {
 		counter = 3;
 		time = System.currentTimeMillis();
 
-		Label.LabelStyle textStyle;
-		BitmapFont font = new BitmapFont();
-
-		textStyle = new Label.LabelStyle();
+		generateFont(Color.YELLOW);
+		Label.LabelStyle textStyle = new Label.LabelStyle();
 		textStyle.font = font;
+		Label gameTitle = new Label("PongComplex", textStyle);
+		gameTitle.setAlignment(Align.center);
+		gameTitle.setBounds(GameInfo.GAME_WIDTH / 2 - 50, GameInfo.GAME_HEIGHT / 2 + 100, 100, 50);
+		stage.addActor(gameTitle);
 
+		generateFont(Color.GREEN);
+		textStyle.font = font;
 		counterLabel = new Label(String.format("%d", counter), textStyle);
-		counterLabel.setBounds(GameInfo.GAME_WIDTH / 2 - 50, GameInfo.GAME_HEIGHT / 2 - 25, 100, 50);
-		counterLabel.setFontScale(1.5f, 1.5f);
+		counterLabel.setBounds(GameInfo.GAME_WIDTH / 2 - 50, GameInfo.GAME_HEIGHT / 2 - 100, 100, 50);
 		counterLabel.setAlignment(Align.center);
 		stage.addActor(counterLabel);
+
+	}
+
+	private void generateFont(Color color) {
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myFont.ttf"));
+		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+		parameter.size = 70;
+		parameter.color = color;
+		font = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
 	}
 
 	@Override
@@ -62,6 +79,10 @@ public class StartScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
+
 		update();
 		stage.getBatch().begin();
 		stage.getBatch().draw(backgroundImage, 0, 0, GameInfo.GAME_WIDTH, GameInfo.GAME_HEIGHT);

@@ -140,11 +140,43 @@ public class MoveHelper {
 	}
 
 	public static void setTarget(PlayerActor playerActor, Direction newDirection) {
-		int playerColumn = inColumn(playerActor);
-		if (playerColumn == -1)
+		//int playerColumn = inColumn(playerActor);
+		//boolean isUp = isUp(playerActor);
+		if (getCurrentColumn(playerActor) == -1)
 			return;
 		float x, y;
 		switch (newDirection) {
+			case UP_LEFT: {
+				x = (GameInfo.GAME_WIDTH / 4) * (getCurrentColumn(playerActor) - 1);
+				break;
+			}
+			case UP: {
+				x = (GameInfo.GAME_WIDTH / 4) * getCurrentColumn(playerActor);
+				break;
+			}
+			case UP_RIGHT: {
+				x = (GameInfo.GAME_WIDTH / 4) * (getCurrentColumn(playerActor) + 1);
+				break;
+			}
+			case DOWN_LEFT: {
+				x = (GameInfo.GAME_WIDTH / 4) * (getCurrentColumn(playerActor) - 1);
+				break;
+			}
+			case DOWN: {
+				x = (GameInfo.GAME_WIDTH / 4) * getCurrentColumn(playerActor);
+				break;
+			}
+			case DOWN_RIGHT: {
+				x = (GameInfo.GAME_WIDTH / 4) * (getCurrentColumn(playerActor) + 1);
+				break;
+			}
+			default: {
+				x = (GameInfo.GAME_WIDTH / 4) * (getCurrentColumn(playerActor) - 1);
+			}
+		}
+		y = getNextY(playerActor);
+
+		/*switch (newDirection) {
 			case UP_LEFT: {
 				x = GameInfo.positions[playerColumn - 1][0];
 				y = GameInfo.positions[playerColumn - 1][1] - GameInfo.POINT_OFFSET;
@@ -179,18 +211,43 @@ public class MoveHelper {
 				x = GameInfo.positions[playerColumn][0];
 				y = GameInfo.positions[playerColumn][1] - GameInfo.POINT_OFFSET;
 			}
-		}
+		}*/
 		playerActor.updateVector(x, y);
 	}
 
+	private static float getNextY(PlayerActor playerActor) {
+		boolean isUp = playerActor.getPlayerY() > (GameInfo.GAME_HEIGHT / 2);
+		if (!isUp) {
+			return GameInfo.GAME_HEIGHT - (GameInfo.GAME_HEIGHT / 4) - GameInfo.POINT_OFFSET;
+		} else {
+			return (GameInfo.GAME_HEIGHT / 4) + GameInfo.POINT_OFFSET;
+		}
+	}
+
+	/*private static boolean isUp(PlayerActor playerActor) {
+		return playerActor.getPlayerY()>(GameInfo.GAME_HEIGHT/2);
+	}*/
+
 	private static int inColumn(PlayerActor playerActor) {
-		int offset = 50;
-		if (playerActor.getPlayerX() > GameInfo.positions[0][0] - offset && playerActor.getPlayerX() < GameInfo.positions[0][0] + offset)
+		int offset = GameInfo.GAME_WIDTH / 8;
+		if (playerActor.getPlayerX() >= GameInfo.positions[0][0] - offset && playerActor.getPlayerX() <= GameInfo.positions[0][0] + offset)
 			return 0;
-		if (playerActor.getPlayerX() > GameInfo.positions[1][0] - offset && playerActor.getPlayerX() < GameInfo.positions[1][0] + offset)
+		if (playerActor.getPlayerX() >= GameInfo.positions[1][0] - offset && playerActor.getPlayerX() <= GameInfo.positions[1][0] + offset)
 			return 1;
 		if (playerActor.getPlayerX() > GameInfo.positions[2][0] - offset && playerActor.getPlayerX() < GameInfo.positions[2][0] + offset)
 			return 2;
 		return -1;
 	}
+
+	private static int getCurrentColumn(PlayerActor playerActor) {
+		int offset = GameInfo.GAME_WIDTH / 8;
+		if (playerActor.getPlayerX() >= GameInfo.positions[0][0] - offset && playerActor.getPlayerX() <= GameInfo.positions[0][0] + offset)
+			return 1;
+		if (playerActor.getPlayerX() >= GameInfo.positions[1][0] - offset && playerActor.getPlayerX() <= GameInfo.positions[1][0] + offset)
+			return 2;
+		if (playerActor.getPlayerX() > GameInfo.positions[2][0] - offset && playerActor.getPlayerX() < GameInfo.positions[2][0] + offset)
+			return 3;
+		return -1;
+	}
+
 }

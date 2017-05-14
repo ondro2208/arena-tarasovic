@@ -22,9 +22,9 @@ public class StudentPlayer implements PlayerActions {
 	private final int columnDistance = GameInfo.GAME_WIDTH / 4;
 
 	@Override
-	public Direction getNextDirection(Point point, PlayerInfo playerInfo) {
-		float playerX = playerInfo.getPlayerX();
-		float playerY = playerInfo.getPlayerY();
+	public Direction getNextDirection(Point point, PlayerInfo player) {
+		float playerX = player.getPlayerX();
+		float playerY = player.getPlayerY();
 		float pointX = point.getPointX();
 		float pointY = point.getPointY();
 		Direction nextDirection = Direction.UP;
@@ -97,10 +97,10 @@ public class StudentPlayer implements PlayerActions {
 	}
 
 	@Override
-	public boolean turnBack(PlayerInfo actor, ArrayList<Enemy> enemies) {
+	public boolean turnBack(PlayerInfo player, ArrayList<Enemy> enemies) {
 		HashMap<Float, Enemy> hmap = new HashMap<Float, Enemy>();
-		float playerX = actor.getPlayerX();
-		float playerY = actor.getPlayerY();
+		float playerX = player.getPlayerX();
+		float playerY = player.getPlayerY();
 		for (Enemy enemy : enemies) {
 			float enemyX = enemy.getEnemyX();
 			float enemyY = enemy.getEnemyY();
@@ -112,8 +112,8 @@ public class StudentPlayer implements PlayerActions {
 			Map.Entry<Float, Enemy> entry = map.entrySet().iterator().next();
 			if (entry.getKey() < 100) {
 				if (entry.getKey() < 50)
-					return needChangeNearEnemy(entry.getValue(), actor);
-				return needChange(entry.getValue(), actor);
+					return needChangeNearEnemy(entry.getValue(), player);
+				return needChange(entry.getValue(), player);
 			} else return false;
 		}
 		return false;

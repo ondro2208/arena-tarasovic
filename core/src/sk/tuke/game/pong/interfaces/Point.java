@@ -6,7 +6,6 @@ package sk.tuke.game.pong.interfaces;
 public interface Point {
 	/**
 	 * Get x position of point
-	 *
 	 * @return x position
 	 */
 	float getPointX();

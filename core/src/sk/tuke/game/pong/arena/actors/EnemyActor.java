@@ -26,7 +26,8 @@ public class EnemyActor extends Actor implements Enemy {
 	private Sprite sprite;
 
 	public EnemyActor(World world) {
-		image = new Texture(Gdx.files.internal("enemy.jpg"));
+		//image = new Texture(Gdx.files.internal("enemy.jpg"));
+		image = new Texture(Gdx.files.internal("enemy1.png"));
 		sprite = new Sprite(image);
 		size = generateRandFromTwoValues();
 		if (generateRandFromTwoValues() == 1) {

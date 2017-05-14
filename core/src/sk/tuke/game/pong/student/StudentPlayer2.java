@@ -15,7 +15,7 @@ public class StudentPlayer2 implements PlayerActions {
 	int count = 0;
 
 	@Override
-	public Direction getNextDirection(Point point, PlayerInfo playerInfo) {
+	public Direction getNextDirection(Point point, PlayerInfo player) {
 		Direction nextDirection;
 		if (count % 2 == 0) {
 			nextDirection = Direction.DOWN;
@@ -25,7 +25,7 @@ public class StudentPlayer2 implements PlayerActions {
 	}
 
 	@Override
-	public boolean turnBack(PlayerInfo actor, ArrayList<Enemy> enemies) {
+	public boolean turnBack(PlayerInfo player, ArrayList<Enemy> enemies) {
 		return false;
 	}
 }

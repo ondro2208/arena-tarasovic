@@ -36,6 +36,7 @@
             <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.0.0.GA" />
             <element id="library" level="project" name="Gradle: javax.validation:validation-api:sources:1.0.0.GA" />
             <element id="library" level="project" name="Gradle: org.json:json:20090211" />
+            <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.4/8816dd669b8ca09e7d5e9575807e92c4318f708/gdx-freetype-1.9.4.jar" />
           </element>
         </element>
         <element id="gwt-compiler-output" facet="html_main/gwt/GWT" />
@@ -85,6 +86,7 @@
             <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.0.0.GA" />
             <element id="library" level="project" name="Gradle: javax.validation:validation-api:sources:1.0.0.GA" />
             <element id="library" level="project" name="Gradle: org.json:json:20090211" />
+            <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.4/8816dd669b8ca09e7d5e9575807e92c4318f708/gdx-freetype-1.9.4.jar" />
           </element>
         </element>
         <element id="gwt-compiler-output" facet="html_main/gwt/GWT" />
@@ -415,6 +417,22 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.4/9af0359c12dcbdfb737d7cbf0715f303b848d13c/gdx-box2d-1.9.4-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: com.badlogicgames.gdx:gdx-freetype-platform:natives-desktop:1.9.4">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype-platform/1.9.4/4bced98798c82ba1cb947343bdd6297243ea09e3/gdx-freetype-platform-1.9.4-natives-desktop.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="Gradle: com.badlogicgames.gdx:gdx-freetype:1.9.4">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.4/8816dd669b8ca09e7d5e9575807e92c4318f708/gdx-freetype-1.9.4.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.4/20a8e0f597a4192c867aee06fb50b9b4f1116b01/gdx-freetype-1.9.4-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-platform:natives-desktop:1.9.4">

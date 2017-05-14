@@ -14,8 +14,8 @@ public interface PlayerInfo {
 	float getPlayerX();
 
 	/**
-	 * Get x position of player
-	 * @return x position
+	 * Get y position of player
+	 * @return y position
 	 */
 	float getPlayerY();
 
