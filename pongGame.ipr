@@ -1,107 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ArtifactManager">
-    <artifact type="exploded-war" name="Gradle : arena-tarasovic : html-draft-1.0.war (exploded)">
-      <output-path>$PROJECT_DIR$/html/build/libs/exploded/html-draft-1.0.war</output-path>
-      <properties id="gradle-properties">
-        <options external-project-path="$PROJECT_DIR$">
-          <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
-        </options>
-      </properties>
-      <root id="root">
-        <element id="directory" name="META-INF">
-          <element id="file-copy" path="$PROJECT_DIR$/html/build/libs/exploded/html-draft-1.0.war/META-INF/MANIFEST.MF" />
-        </element>
-        <element id="javaee-facet-resources" facet="html_main/web/Web Gradle : html-draft-1.0.war" />
-        <element id="directory" name="WEB-INF">
-          <element id="directory" name="classes">
-            <element id="module-output" name="html_main" />
-            <element id="dir-copy" path="$PROJECT_DIR$/html/build/resources/main" />
-          </element>
-          <element id="directory" name="lib">
-            <element id="archive" name="arena-tarasovic-core-1.0.jar">
-              <element id="module-output" name="core_main" />
-              <element id="dir-copy" path="$PROJECT_DIR$/core/build/resources/main" />
-            </element>
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-box2d:1.9.4" />
-            <element id="library" level="project" name="Gradle: kpi.openlab.arena:arena-runner-interface:1.0" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:sources:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx:sources:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-box2d:sources:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-box2d-gwt:sources:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.google.gwt:gwt-user:2.6.1" />
-            <element id="library" level="project" name="Gradle: com.google.gwt:gwt-servlet:2.6.0" />
-            <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.0.0.GA" />
-            <element id="library" level="project" name="Gradle: javax.validation:validation-api:sources:1.0.0.GA" />
-            <element id="library" level="project" name="Gradle: org.json:json:20090211" />
-            <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.4/8816dd669b8ca09e7d5e9575807e92c4318f708/gdx-freetype-1.9.4.jar" />
-          </element>
-        </element>
-        <element id="gwt-compiler-output" facet="html_main/gwt/GWT" />
-      </root>
-    </artifact>
-    <artifact type="war" name="Gradle : arena-tarasovic : html-draft-1.0.war">
-      <output-path>$PROJECT_DIR$/html/build/libs</output-path>
-      <properties id="gradle-properties">
-        <options external-project-path="$PROJECT_DIR$" />
-      </properties>
-      <root id="archive" name="html-draft-1.0.war">
-        <element id="artifact" artifact-name="Gradle : arena-tarasovic : html-draft-1.0.war (exploded)" />
-      </root>
-    </artifact>
-    <artifact type="exploded-war" name="Gradle : arena-tarasovic : html-1.0.war (exploded)">
-      <output-path>$PROJECT_DIR$/html/build/libs/exploded/html-1.0.war</output-path>
-      <properties id="gradle-properties">
-        <options external-project-path="$PROJECT_DIR$">
-          <manifest>TWFuaWZlc3QtVmVyc2lvbjogMS4wDQoNCg==</manifest>
-        </options>
-      </properties>
-      <root id="root">
-        <element id="directory" name="META-INF">
-          <element id="file-copy" path="$PROJECT_DIR$/html/build/libs/exploded/html-1.0.war/META-INF/MANIFEST.MF" />
-        </element>
-        <element id="javaee-facet-resources" facet="html_main/web/Web Gradle : html-1.0.war" />
-        <element id="directory" name="WEB-INF">
-          <element id="directory" name="classes">
-            <element id="module-output" name="html_main" />
-            <element id="dir-copy" path="$PROJECT_DIR$/html/build/resources/main" />
-          </element>
-          <element id="directory" name="lib">
-            <element id="archive" name="arena-tarasovic-core-1.0.jar">
-              <element id="module-output" name="core_main" />
-              <element id="dir-copy" path="$PROJECT_DIR$/core/build/resources/main" />
-            </element>
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-box2d:1.9.4" />
-            <element id="library" level="project" name="Gradle: kpi.openlab.arena:arena-runner-interface:1.0" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:sources:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx:sources:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-box2d:sources:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.badlogicgames.gdx:gdx-box2d-gwt:sources:1.9.4" />
-            <element id="library" level="project" name="Gradle: com.google.gwt:gwt-user:2.6.1" />
-            <element id="library" level="project" name="Gradle: com.google.gwt:gwt-servlet:2.6.0" />
-            <element id="library" level="project" name="Gradle: javax.validation:validation-api:1.0.0.GA" />
-            <element id="library" level="project" name="Gradle: javax.validation:validation-api:sources:1.0.0.GA" />
-            <element id="library" level="project" name="Gradle: org.json:json:20090211" />
-            <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-freetype/1.9.4/8816dd669b8ca09e7d5e9575807e92c4318f708/gdx-freetype-1.9.4.jar" />
-          </element>
-        </element>
-        <element id="gwt-compiler-output" facet="html_main/gwt/GWT" />
-      </root>
-    </artifact>
-    <artifact type="war" name="Gradle : arena-tarasovic : html-1.0.war">
-      <output-path>$PROJECT_DIR$/html/build/libs</output-path>
-      <properties id="gradle-properties">
-        <options external-project-path="$PROJECT_DIR$" />
-      </properties>
-      <root id="archive" name="html-1.0.war">
-        <element id="artifact" artifact-name="Gradle : arena-tarasovic : html-1.0.war (exploded)" />
-      </root>
-    </artifact>
-  </component>
   <component name="CompilerConfiguration">
     <resourceExtensions>
       <entry name=".+\.(properties|xml|html|dtd|tld)" />
@@ -114,12 +12,12 @@
     <bytecodeTargetLevel>
       <module name="arena-desktop_main" target="1.8" />
       <module name="arena-desktop_test" target="1.8" />
+      <module name="arena-tarasovic_main" target="1.8" />
+      <module name="arena-tarasovic_test" target="1.8" />
       <module name="core_main" target="1.8" />
       <module name="core_test" target="1.8" />
       <module name="desktop_main" target="1.8" />
       <module name="desktop_test" target="1.8" />
-      <module name="html_main" target="1.6" />
-      <module name="html_test" target="1.6" />
     </bytecodeTargetLevel>
   </component>
   <component name="CopyrightManager" default="" />
@@ -139,7 +37,6 @@
             <option value="$PROJECT_DIR$/arena-desktop" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/desktop" />
-            <option value="$PROJECT_DIR$/html" />
           </set>
         </option>
       </GradleProjectSettings>
@@ -159,8 +56,8 @@
     <version value="1.0" />
   </component>
   <component name="JavadocGenerationManager">
-    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop/doc" />
-    <option name="OPTION_SCOPE" value="private" />
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Desktop/userDoc" />
+    <option name="OPTION_SCOPE" value="package" />
     <option name="OPTION_HIERARCHY" value="true" />
     <option name="OPTION_NAVIGATOR" value="true" />
     <option name="OPTION_INDEX" value="true" />
@@ -174,7 +71,7 @@
     <option name="HEAP_SIZE" />
     <option name="LOCALE" />
     <option name="OPEN_IN_BROWSER" value="true" />
-    <option name="OPTION_INCLUDE_LIBS" value="false" />
+    <option name="OPTION_INCLUDE_LIBS" value="true" />
   </component>
   <component name="Palette2">
     <group name="Swing">
@@ -309,15 +206,14 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/arena-desktop/arena-desktop_main.iml" filepath="$PROJECT_DIR$/.idea/modules/arena-desktop/arena-desktop_main.iml" group="arena-desktop" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/arena-desktop/arena-desktop_test.iml" filepath="$PROJECT_DIR$/.idea/modules/arena-desktop/arena-desktop_test.iml" group="arena-desktop" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/arena-tarasovic.iml" filepath="$PROJECT_DIR$/.idea/modules/arena-tarasovic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/arena-tarasovic_main.iml" filepath="$PROJECT_DIR$/.idea/modules/arena-tarasovic_main.iml" group="arena-tarasovic" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/arena-tarasovic_test.iml" filepath="$PROJECT_DIR$/.idea/modules/arena-tarasovic_test.iml" group="arena-tarasovic" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_main.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_test.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/desktop.iml" group="desktop" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/desktop_main.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/desktop_main.iml" group="desktop" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/desktop_test.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/desktop_test.iml" group="desktop" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/html/html.iml" filepath="$PROJECT_DIR$/.idea/modules/html/html.iml" group="html" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/html/html_main.iml" filepath="$PROJECT_DIR$/.idea/modules/html/html_main.iml" group="html" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/html/html_test.iml" filepath="$PROJECT_DIR$/.idea/modules/html/html_test.iml" group="html" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
@@ -349,24 +245,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.1.7/15a62dbee75aadf62b7d35640533262d764b29d3/logback-core-1.1.7-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:1.9.4">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-gwt/1.9.4/4e43ab54a25d53cc74895192210393880503459d/gdx-backend-gwt-1.9.4.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-gwt/1.9.4/f2804363b66d71ecd3c98cc9afbf2f55ca4f0dec/gdx-backend-gwt-1.9.4-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: com.badlogicgames.gdx:gdx-backend-gwt:sources:1.9.4">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-gwt/1.9.4/f2804363b66d71ecd3c98cc9afbf2f55ca4f0dec/gdx-backend-gwt-1.9.4-sources.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-gwt/1.9.4/f2804363b66d71ecd3c98cc9afbf2f55ca4f0dec/gdx-backend-gwt-1.9.4-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.4">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.4/4c6c108a9dcbc07096de8594b93f9cab33856fe2/gdx-backend-lwjgl-1.9.4.jar!/" />
@@ -385,15 +263,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-lwjgl/1.9.6/54887b828ab0c6c55deae03b0cca70c31531bacd/gdx-backend-lwjgl-1.9.6-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.badlogicgames.gdx:gdx-box2d-gwt:sources:1.9.4">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-gwt/1.9.4/e21bf4a4c310abdb55873b863241ec94e473d7cc/gdx-box2d-gwt-1.9.4-sources.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-gwt/1.9.4/e21bf4a4c310abdb55873b863241ec94e473d7cc/gdx-box2d-gwt-1.9.4-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: com.badlogicgames.gdx:gdx-box2d-platform:natives-desktop:1.9.4">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d-platform/1.9.4/905a9ed3017cd3917b7fbada5ece58c40fddcbca/gdx-box2d-platform-1.9.4-natives-desktop.jar!/" />
@@ -404,15 +273,6 @@
     <library name="Gradle: com.badlogicgames.gdx:gdx-box2d:1.9.4">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.4/98a0d25c9f0637fecac6e4aacf7287aa635964f5/gdx-box2d-1.9.4.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.4/9af0359c12dcbdfb737d7cbf0715f303b848d13c/gdx-box2d-1.9.4-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: com.badlogicgames.gdx:gdx-box2d:sources:1.9.4">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.9.4/9af0359c12dcbdfb737d7cbf0715f303b848d13c/gdx-box2d-1.9.4-sources.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES>
@@ -460,15 +320,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.6/7d903ecd6b0df2ec334814b8e70618e4c93fd37c/gdx-1.9.6-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: com.badlogicgames.gdx:gdx:sources:1.9.4">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.4/f0e4d245a67fc96707610a4260a325fa034c93d1/gdx-1.9.4-sources.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.9.4/f0e4d245a67fc96707610a4260a325fa034c93d1/gdx-1.9.4-sources.jar!/" />
-      </SOURCES>
-    </library>
     <library name="Gradle: com.badlogicgames.jlayer:jlayer:1.0.1-gdx">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.badlogicgames.jlayer/jlayer/1.0.1-gdx/7cca83cec5c1b2f011362f4d85aabd71a73b049d/jlayer-1.0.1-gdx.jar!/" />
@@ -485,72 +336,6 @@
       <JAVADOC />
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/21.0/b9ed26b8c23fe7cd3e6b463b34e54e5c6d9536d5/guava-21.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: com.google.gwt:gwt-codeserver:2.6.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-codeserver/2.6.0/c88f4d9a43a8161317a77c721a75aa3a78952e37/gwt-codeserver-2.6.0.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="Gradle: com.google.gwt:gwt-dev:2.6.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-dev/2.6.0/af3d9ad2fb8be30dc87fdcd6d9a373b2ab675802/gwt-dev-2.6.0.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="Gradle: com.google.gwt:gwt-servlet:2.6.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-servlet/2.6.0/d1e40c23bf78192482ee76c93619a10b4ea649f7/gwt-servlet-2.6.0.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-servlet/2.6.0/7a59cc91e16f255d22b692dcc5839d3eb1d606c6/gwt-servlet-2.6.0-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: com.google.gwt:gwt-user:2.6.0">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-user/2.6.0/8237d1bd37127188107388c8724be44a0e9f73ca/gwt-user-2.6.0.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
-    <library name="Gradle: com.google.gwt:gwt-user:2.6.1">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-user/2.6.1/c078b1b8cc0281214b0eb458d2c283d039374fad/gwt-user-2.6.1.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.gwt/gwt-user/2.6.1/c32cc6470243fe2703e807e1025ec3354fba0ef8/gwt-user-2.6.1-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: javax.validation:validation-api:1.0.0.GA">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.validation/validation-api/1.0.0.GA/b6bd7f9d78f6fdaa3c37dae18a4bd298915f328e/validation-api-1.0.0.GA.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.validation/validation-api/1.0.0.GA/7a561191db2203550fbfa40d534d4997624cd369/validation-api-1.0.0.GA-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: javax.validation:validation-api:sources:1.0.0.GA">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.validation/validation-api/1.0.0.GA/7a561191db2203550fbfa40d534d4997624cd369/validation-api-1.0.0.GA-sources.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.validation/validation-api/1.0.0.GA/7a561191db2203550fbfa40d534d4997624cd369/validation-api-1.0.0.GA-sources.jar!/" />
-      </SOURCES>
-    </library>
-    <library name="Gradle: junit:junit:4.11">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.11/4e031bb61df09069aeb2bffb4019e7a5034a4ee0/junit-4.11.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/junit/junit/4.11/28e0ad201304e4a4abf999ca0570b7cffc352c3c/junit-4.11-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: kpi.openlab.arena:arena-runner-interface:1.0">
@@ -619,13 +404,6 @@
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.jutils/jutils/1.0.0/d18678a00b216863206a1bb6190507e02a32971b/jutils-1.0.0-sources.jar!/" />
       </SOURCES>
     </library>
-    <library name="Gradle: org.hamcrest:hamcrest-core:1.3">
-      <CLASSES>
-        <root url="jar://$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
-    </library>
     <library name="Gradle: org.jcraft:jorbis:0.0.17">
       <CLASSES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jcraft/jorbis/0.0.17/8872d22b293e8f5d7d56ff92be966e6dc28ebdc6/jorbis-0.0.17.jar!/" />
@@ -634,13 +412,6 @@
       <SOURCES>
         <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jcraft/jorbis/0.0.17/5446be5d62e4c6b347c8e6cd28dc00a936417ba2/jorbis-0.0.17-sources.jar!/" />
       </SOURCES>
-    </library>
-    <library name="Gradle: org.json:json:20090211">
-      <CLASSES>
-        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.json/json/20090211/c183aa3a2a6250293808bba12262c8920ce5a51c/json-20090211.jar!/" />
-      </CLASSES>
-      <JAVADOC />
-      <SOURCES />
     </library>
     <library name="Gradle: org.lwjgl.lwjgl:lwjgl-platform:natives-linux:2.9.2">
       <CLASSES>

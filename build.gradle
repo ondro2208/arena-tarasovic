@@ -12,11 +12,12 @@ buildscript {
 
 allprojects {
     apply plugin: "eclipse"
+    apply plugin: 'java'
     apply plugin: "idea"
 
     version = '1.0'
     ext {
-        appName = "pong-game"
+        appName = "pongcomplex-game"
         gdxVersion = '1.9.4'
         roboVMVersion = '2.2.0'
         box2DLightsVersion = '1.4'
@@ -46,35 +47,22 @@ project(":desktop") {
     }
 }
 
-project(":html") {
-    apply plugin: "gwt"
-    apply plugin: "war"
-
-
-    dependencies {
-        compile project(":core")
-        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
-        compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
-        compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
-        compile "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
-    }
-}
-
 project(":arena-desktop") {
     apply plugin: "java"
 
     dependencies {
-        compile project(":desktop")
+        compile project(":core")
         compile 'kpi.openlab.arena:arena-runner:1.0'
         compile 'kpi.openlab.arena:arena-runner-libgdx:1.0'
+        compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
 }
 
 project(":core") {
     apply plugin: "java"
-
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -87,3 +75,4 @@ project(":core") {
 tasks.eclipse.doLast {
     delete ".project"
 }
+

@@ -1,2 +1,2 @@
-include 'desktop', 'html', 'core','arena-desktop'
+include 'desktop','core','arena-desktop'
 
